@@ -12,148 +12,135 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/Profile_pic.png',
-                            height: 40,
-                            width: 40,
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        // Ensures content is scrollable
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/Profile_pic.png',
+                        height: 40,
+                        width: 40,
+                      ),
+                      const SizedBox(width: 10),
+                      // Add spacing between image and text
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Satyam',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 15),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Satyam',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 15),
-                              ),
-                              Text(
-                                '+91 808192914',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 15),
-                              ),
-                            ],
+                          Text(
+                            '+91 808192914',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w300, fontSize: 15),
                           ),
                         ],
                       ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          Get.to(ProfileEditPage());
-                        },
-                        icon: Icon(
-                          Icons.edit,
-                        ))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CardWidget(
-                    image: "assets/images/Notes.png",
-                    text: "My Booking",
-                    ontap: () {},
+                    ],
                   ),
-                  CardWidget(
-                    image: "assets/images/Wallet.png",
-                    text: "Wallet",
-                    ontap: () {},
+                  IconButton(
+                    onPressed: () {
+                      Get.to(ProfileEditPage());
+                    },
+                    icon: const Icon(Icons.edit),
                   ),
-                  CardWidget(
-                    image: "assets/images/Headphones.png",
-                    text: "Help & Support",
-                    ontap: () {},
-                  )
                 ],
               ),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                child: Container(
-                  color: Color(0xffD9D9D9),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CardWidget(
+                  image: "assets/images/Notes.png",
+                  text: "My Booking",
+                  ontap: () {},
                 ),
-                width: 360,
-                height: 4,
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-                child: Column(
-                  children: [
-                    ProfileItems(
-                        ontap: () {},
-                        text: "My Plans",
-                        image: "assets/images/Notebook.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileItems(
-                        ontap: () {},
-                        text: "Plus Membership",
-                        image: "assets/images/Badge.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileItems(
-                        ontap: () {},
-                        text: "My Rating",
-                        image: "assets/images/Favorite.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileItems(
-                        ontap: () {},
-                        text: "Manage Addresses",
-                        image: "assets/images/Location.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileItems(
-                        ontap: () {},
-                        text: "Manage Payment methods",
-                        image: "assets/images/Creditcard.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileItems(
-                        ontap: () {},
-                        text: "Settings",
-                        image: "assets/images/Settings.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileItems(
-                        ontap: () {},
-                        text: "About Adfix",
-                        image: "assets/images/ad.png"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                CardWidget(
+                  image: "assets/images/Wallet.png",
+                  text: "Wallet",
+                  ontap: () {},
                 ),
+                CardWidget(
+                  image: "assets/images/Headphones.png",
+                  text: "Help & Support",
+                  ontap: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            Container(
+              width: MediaQuery.of(context).size.width *
+                  0.9, // Adjusts to screen size
+              height: 4,
+              color: const Color(0xffD9D9D9),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+              child: Column(
+                children: [
+                  ProfileItems(
+                    ontap: () {},
+                    text: "My Plans",
+                    image: "assets/images/Notebook.png",
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileItems(
+                    ontap: () {},
+                    text: "Plus Membership",
+                    image: "assets/images/Badge.png",
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileItems(
+                    ontap: () {},
+                    text: "My Rating",
+                    image: "assets/images/Favorite.png",
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileItems(
+                    ontap: () {},
+                    text: "Manage Addresses",
+                    image: "assets/images/Location.png",
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileItems(
+                    ontap: () {},
+                    text: "Manage Payment methods",
+                    image: "assets/images/Creditcard.png",
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileItems(
+                    ontap: () {},
+                    text: "Settings",
+                    image: "assets/images/Settings.png",
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileItems(
+                    ontap: () {},
+                    text: "About Adfix",
+                    image: "assets/images/ad.png",
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-              SizedBox(
-                height: 100,
-              ),
-              LogoutButton()
-            ],
-          ),
-        ));
+            ),
+            const SizedBox(height: 100),
+            LogoutButton(),
+          ],
+        ),
+      ),
+    );
   }
 }
