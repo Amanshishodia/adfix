@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../HomePage/controller/CartController.dart';
 import '../../HomePage/widget/EachItemListTile.dart';
 import '../Controller/DetailPageContoller.dart';
 import '../widgets/offer.dart';
@@ -14,6 +14,7 @@ class DetailsPage extends StatelessWidget {
   DetailsPage({Key? key, this.itemType, this.image}) : super(key: key);
 
   final DetailsController controller = Get.put(DetailsController());
+  final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +183,7 @@ class DetailsPage extends StatelessWidget {
                                 itemCount: services.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
-                                  return Eachitemlisttile(
+                                  return EachItemListTile(
                                       service: services[index]);
                                 },
                               );
@@ -196,24 +197,33 @@ class DetailsPage extends StatelessWidget {
               },
             ),
             Obx(() {
-             
-              return controller.isLoading.value
-                  ? SizedBox.shrink() 
-                  : Align(
+              final cartController = Get.find<CartController>();
+
+              return cartController.itemCount > 0
+                  ? Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
                         child: Column(
-                          mainAxisSize:
-                              MainAxisSize.min, // Ensure minimal space
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
                               width: double.infinity,
+                              padding: EdgeInsets.symmetric(vertical: 8),
                               color: Colors.green[900],
                               child: Text(
-                                "Congratulations! 100 saved so far!",
+                                "${cartController.itemCount} items in cart",
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.white),
                                 textAlign: TextAlign.center,
@@ -221,20 +231,25 @@ class DetailsPage extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "100",
+                                    "₹${cartController.total.value.toStringAsFixed(2)}",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      // Navigate to cart page
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color.fromARGB(
                                           255, 109, 42, 216),
@@ -243,7 +258,7 @@ class DetailsPage extends StatelessWidget {
                                       ),
                                     ),
                                     child: Text(
-                                      "View Card",
+                                      "View Cart",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -253,7 +268,8 @@ class DetailsPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                    );
+                    )
+                  : SizedBox.shrink();
             }),
           ],
         ),

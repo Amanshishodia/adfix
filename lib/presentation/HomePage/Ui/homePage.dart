@@ -18,24 +18,28 @@ class Homepage extends StatelessWidget {
     {
       'image': 'assets/images/fridge.png',
       'text': 'Refrigerator \nRepair',
-      'type': 'refrigerator'
+      'type': 'Refrigetor Repair'
     },
     {
       'image': 'assets/images/waterpurifier.png',
       'text': 'Water Purifier \nRepair',
-      'type': 'vacuum_cleaner'
+      'type': 'Water Purifier Repair'
     },
     {
       'image': 'assets/images/washingmachine.png',
       'text': 'Washing Machine \nRepair',
-      'type': 'washing_machine'
+      'type': 'Washing Machine Repair'
     },
     {
       'image': 'assets/images/geyser.png',
       'text': 'Geyser Repair & Service',
-      'type': 'microwave'
+      'type': 'Geyser Repair'
     },
-    {'image': 'assets/images/tv.png', 'text': 'Led TV Repair', 'type': 'tv'},
+    {
+      'image': 'assets/images/tv.png',
+      'text': 'Led TV Repair',
+      'type': 'Led Tv Repair'
+    },
   ];
 
   final List<Map<String, String>> _twoCards = const [

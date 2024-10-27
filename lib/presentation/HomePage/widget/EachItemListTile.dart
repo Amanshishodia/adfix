@@ -1,20 +1,25 @@
 import 'dart:ui';
-import 'package:adfix/presentation/DetailPage/model/ServiceResponseModel.dart';
-import 'package:adfix/presentation/HomePage/widget/serviceCheck.dart';
-import 'package:adfix/presentation/HomePage/widget/serviceFeatures.dart';
-import 'package:flutter/material.dart';
 
-class Eachitemlisttile extends StatefulWidget {
+import 'package:adfix/presentation/DetailPage/model/ServiceResponseModel.dart';
+import 'package:adfix/presentation/HomePage/widget/serviceFeatures.dart';
+// Import the ServiceController
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controller/CartController.dart'; // Import GetX
+
+class EachItemListTile extends StatefulWidget {
   final Services service; // Accept the Service model
 
-  const Eachitemlisttile({super.key, required this.service});
+  const EachItemListTile({super.key, required this.service});
 
   @override
-  _EachitemlisttileState createState() => _EachitemlisttileState();
+  _EachItemListTileState createState() => _EachItemListTileState();
 }
 
-class _EachitemlisttileState extends State<Eachitemlisttile> {
+class _EachItemListTileState extends State<EachItemListTile> {
   int _quantity = 0; // This keeps track of the quantity for each service
+  final CartController cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +133,22 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
 
   // Method to close the drawer and show quantity controller
   void _closeDrawerAndShowQuantityController() {
+    CartItem cartItem = CartItem(
+      id: widget.service.id ?? DateTime.now().toString(),
+      // Fallback if id is null
+      name: widget.service.serviceName,
+      price: double.parse(widget.service.serviceCharge.toString()),
+      imageUrl: widget.service.image.url,
+      quantity: 1,
+    );
+
+    // Add to cart
+    cartController.addItem(cartItem);
+
+    // Close the drawer
     Navigator.of(context).pop();
+
+    // Update state
     setState(() {
       _quantity = 1;
     });
@@ -136,52 +156,62 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
 
   // Build the quantity controller widget
   Widget _buildQuantityController() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0, 2), 
-            blurRadius: 4.0, 
-          ),
-        ],
-      ),
-      width: 87,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(Icons.remove, size: 12),
-            onPressed: () {
-              setState(() {
-                if (_quantity > 1) {
-                  _quantity--;
-                } else {
-                  _quantity = 0; // Reset to "Add" button if quantity < 1
+    return Obx(() {
+      final cartItem = cartController.cartItems.firstWhere(
+        (item) => item.id == (widget.service.id ?? ''),
+        orElse: () => CartItem(
+          id: widget.service.id ?? DateTime.now().toString(),
+          name: widget.service.serviceName,
+          price: double.parse(widget.service.serviceCharge.toString()),
+          imageUrl: widget.service.image.url,
+          quantity: 0,
+        ),
+      );
+
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0, 2),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        width: 87,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(Icons.remove, size: 12),
+              onPressed: () {
+                cartController.decrementQuantity(widget.service.id ?? '');
+                if (cartItem.quantity.value == 0) {
+                  setState(() {
+                    _quantity = 0;
+                  });
                 }
-              });
-            },
-          ),
-          Text(
-            '$_quantity',
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-          ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(Icons.add, size: 12),
-            onPressed: () {
-              setState(() {
-                _quantity++;
-              });
-            },
-          ),
-        ],
-      ),
-    );
+              },
+            ),
+            Text(
+              '${cartItem.quantity}',
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+            ),
+            IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(Icons.add, size: 12),
+              onPressed: () {
+                cartController.incrementQuantity(widget.service.id ?? '');
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   void _showServiceDetails(BuildContext context, Services service) {
@@ -228,10 +258,8 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                // Navigator.of(context).pop();
+                                // Close the drawer and show quantity controller
                                 _closeDrawerAndShowQuantityController();
-                                // Navigator.pop(context);
-                                // _showServiceDetails(context, service);
                               },
                               style: ElevatedButton.styleFrom(
                                 shadowColor: Colors.black12,
@@ -274,7 +302,6 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
                           ),
                         ),
                         SizedBox(height: 35),
-                        //  SizedBox(height: 35),
                         Text(
                           "About the service",
                           style: TextStyle(
@@ -284,15 +311,14 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
                         ),
                         SizedBox(height: 9),
                         ServiceFeatures(
-                            text: 'Advnced Foam-jet cleaning of indoor unit'),
+                            text: 'Advanced Foam-jet cleaning of indoor unit'),
                         SizedBox(height: 9),
                         ServiceFeatures(
-                            text: 'Advnced Foam-jet cleaning of indoor unit'),
+                            text: 'Advanced Foam-jet cleaning of indoor unit'),
                         SizedBox(height: 9),
                         ServiceFeatures(
-                            text: 'Advnced Foam-jet cleaning of indoor unit'),
+                            text: 'Advanced Foam-jet cleaning of indoor unit'),
                         SizedBox(height: 35),
-
                         Text(
                           "About the service",
                           style: TextStyle(
@@ -300,7 +326,6 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // SizedBox(height: 9),
                         Row(
                           children: [
                             Column(
@@ -314,17 +339,12 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
                                       child: Text(
                                         '${index + 1}',
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 10,
                                           color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                    if (index < 3) // Vertical line
-                                      Container(
-                                        width: 2,
-                                        height: 85,
-                                        color: Colors.grey,
-                                      ),
+                                    SizedBox(height: 5),
                                   ],
                                 );
                               }),
@@ -332,30 +352,19 @@ class _EachitemlisttileState extends State<Eachitemlisttile> {
                             SizedBox(width: 10),
                             Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 35),
-                                  ServiceCheck(
-                                    heading: 'Pre-service checks',
-                                    Subheading:
-                                        'Detailed inspection including gas check to identify repairs',
+                                  Text(
+                                    "AC Cleaning",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  SizedBox(height: 18),
-                                  ServiceCheck(
-                                    heading: 'Foam-jet cleaning',
-                                    Subheading:
-                                        'Advanced cleaning of the indoor unit',
-                                  ),
-                                  SizedBox(height: 18),
-                                  ServiceCheck(
-                                    heading: 'Post-service checks',
-                                    Subheading:
-                                        'Final check to ensure everything is working fine',
-                                  ),
-                                  SizedBox(height: 18),
-                                  ServiceCheck(
-                                    heading: 'Feedback and cleanup',
-                                    Subheading:
-                                        'Collect feedback and clean the service area',
+                                  Text(
+                                    "Includes cleaning of filters and AC cooling coils.",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey),
                                   ),
                                 ],
                               ),
