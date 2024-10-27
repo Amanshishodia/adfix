@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:adfix/presentation/DetailPage/model/ServiceResponseModel.dart';
 import 'package:adfix/presentation/HomePage/widget/serviceFeatures.dart';
-// Import the ServiceController
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,6 @@ class EachItemListTile extends StatefulWidget {
 }
 
 class _EachItemListTileState extends State<EachItemListTile> {
-  int _quantity = 0; // This keeps track of the quantity for each service
   final CartController cartController = Get.find<CartController>();
 
   @override
@@ -93,10 +91,22 @@ class _EachItemListTileState extends State<EachItemListTile> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Positioned(
-                      bottom: -10,
-                      child: _quantity == 0
-                          ? ElevatedButton(
+                    Obx(() {
+                      final cartItem = cartController.cartItems.firstWhere(
+                        (item) => item.id == (widget.service.id ?? ''),
+                        orElse: () => CartItem(
+                          id: widget.service.id ?? DateTime.now().toString(),
+                          name: widget.service.serviceName,
+                          price: double.parse(
+                              widget.service.serviceCharge.toString()),
+                          imageUrl: widget.service.image.url,
+                          quantity: 0,
+                        ),
+                      );
+
+                      return cartItem.quantity > 0
+                          ? _buildQuantityController(cartItem)
+                          : ElevatedButton(
                               onPressed: () {
                                 _openDrawer(context);
                               },
@@ -113,9 +123,8 @@ class _EachItemListTileState extends State<EachItemListTile> {
                                 style: TextStyle(
                                     fontSize: 10, color: Colors.black),
                               ),
-                            )
-                          : _buildQuantityController(),
-                    ),
+                            );
+                    }),
                   ],
                 ),
               ),
@@ -126,92 +135,66 @@ class _EachItemListTileState extends State<EachItemListTile> {
     );
   }
 
-  // Method to show the drawer
   void _openDrawer(BuildContext context) {
     _showServiceDetails(context, widget.service);
   }
 
-  // Method to close the drawer and show quantity controller
   void _closeDrawerAndShowQuantityController() {
     CartItem cartItem = CartItem(
       id: widget.service.id ?? DateTime.now().toString(),
-      // Fallback if id is null
       name: widget.service.serviceName,
       price: double.parse(widget.service.serviceCharge.toString()),
       imageUrl: widget.service.image.url,
       quantity: 1,
     );
 
-    // Add to cart
     cartController.addItem(cartItem);
 
-    // Close the drawer
     Navigator.of(context).pop();
-
-    // Update state
-    setState(() {
-      _quantity = 1;
-    });
   }
 
-  // Build the quantity controller widget
-  Widget _buildQuantityController() {
-    return Obx(() {
-      final cartItem = cartController.cartItems.firstWhere(
-        (item) => item.id == (widget.service.id ?? ''),
-        orElse: () => CartItem(
-          id: widget.service.id ?? DateTime.now().toString(),
-          name: widget.service.serviceName,
-          price: double.parse(widget.service.serviceCharge.toString()),
-          imageUrl: widget.service.image.url,
-          quantity: 0,
-        ),
-      );
-
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(0, 2),
-              blurRadius: 4.0,
-            ),
-          ],
-        ),
-        width: 87,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-              padding: EdgeInsets.zero,
-              icon: Icon(Icons.remove, size: 12),
-              onPressed: () {
-                cartController.decrementQuantity(widget.service.id ?? '');
-                if (cartItem.quantity.value == 0) {
-                  setState(() {
-                    _quantity = 0;
-                  });
-                }
-              },
-            ),
-            Text(
-              '${cartItem.quantity}',
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-            ),
-            IconButton(
-              padding: EdgeInsets.zero,
-              icon: Icon(Icons.add, size: 12),
-              onPressed: () {
-                cartController.incrementQuantity(widget.service.id ?? '');
-              },
-            ),
-          ],
-        ),
-      );
-    });
+  Widget _buildQuantityController(CartItem cartItem) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 2),
+            blurRadius: 4.0,
+          ),
+        ],
+      ),
+      width: 107,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+            padding: EdgeInsets.zero,
+            icon: Icon(Icons.remove, size: 12),
+            onPressed: () {
+              cartController.decrementQuantity(cartItem.id);
+              if (cartItem.quantity.value <= 0) {
+                cartController.removeItem(cartItem.id); // Remove from cart
+              }
+            },
+          ),
+          Text(
+            '${cartItem.quantity}',
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+          ),
+          IconButton(
+            padding: EdgeInsets.zero,
+            icon: Icon(Icons.add, size: 12),
+            onPressed: () {
+              cartController.incrementQuantity(cartItem.id);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   void _showServiceDetails(BuildContext context, Services service) {
@@ -245,7 +228,6 @@ class _EachItemListTileState extends State<EachItemListTile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Service details section
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -258,7 +240,6 @@ class _EachItemListTileState extends State<EachItemListTile> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                // Close the drawer and show quantity controller
                                 _closeDrawerAndShowQuantityController();
                               },
                               style: ElevatedButton.styleFrom(
@@ -332,7 +313,6 @@ class _EachItemListTileState extends State<EachItemListTile> {
                               children: List.generate(4, (index) {
                                 return Column(
                                   children: [
-                                    // Numbered Circle
                                     CircleAvatar(
                                       radius: 12,
                                       backgroundColor: Colors.grey,
@@ -344,29 +324,16 @@ class _EachItemListTileState extends State<EachItemListTile> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 5),
+                                    SizedBox(height: 8),
                                   ],
                                 );
                               }),
                             ),
-                            SizedBox(width: 10),
+                            SizedBox(width: 8),
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "AC Cleaning",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Includes cleaning of filters and AC cooling coils.",
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
-                                  ),
-                                ],
+                              child: Text(
+                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec ullamcorper nulla, nisi at nunc. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.",
+                                style: TextStyle(fontSize: 12),
                               ),
                             ),
                           ],
