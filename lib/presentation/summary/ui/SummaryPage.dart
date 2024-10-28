@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:adfix/presentation/summary/widgets/dateButton.dart';
+import 'package:adfix/presentation/summary/widgets/timeButton.dart';
 import 'package:flutter/material.dart';
 
 class ServiceSummaryPage extends StatelessWidget {
@@ -475,7 +479,9 @@ class ServiceSummaryPage extends StatelessWidget {
         ),
         child: SafeArea(
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              _showServiceDetails(context);
+            },
             style: TextButton.styleFrom(
               backgroundColor: Colors.deepPurple,
               padding: EdgeInsets.symmetric(vertical: 16),
@@ -494,6 +500,167 @@ class ServiceSummaryPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showServiceDetails(
+    BuildContext context,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Stack(
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(color: Colors.black.withOpacity(0.5)),
+            ),
+            DraggableScrollableSheet(
+              initialChildSize: 0.8,
+              maxChildSize: 0.85,
+              minChildSize: 0.7,
+              builder: (_, scrollController) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 15),
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              'assets/images/Home2.png',
+                              // width: 50,
+                              height: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Lorem ipsum dolor sit amet',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_ios,
+                                size: 16, color: Colors.grey),
+                          ],
+                        ),
+                        SizedBox(height: 25),
+                        const Text(
+                          "Lorem ipsum dolor sit amet, consectetur?",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        const Text(
+                          "Lorem ipsum dolor sit amet, consectetur?",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            DateButton(text1: 'Thu', text2: '3'),
+                            DateButton(text1: 'Thu', text2: '3'),
+                            DateButton(text1: 'Thu', text2: '3'),
+                          ],
+                        ),
+                        const Text(
+                          "Lorem ipsum dolor sit amet, consectetur?",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 12,
+                        ),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 2.5,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                          ),
+                          itemCount: 15,
+                          itemBuilder: (context, index) {
+                            return TimeButton(
+                              text1: '10:00 AM',
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(0, -2),
+                    ),
+                  ],
+                ),
+                child: SafeArea(
+                  child: TextButton(
+                    onPressed: () {
+                      // _showServiceDetails(context);
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Proceed to checkout',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

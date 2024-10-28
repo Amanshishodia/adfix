@@ -1,4 +1,6 @@
 import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
+import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
+import 'package:adfix/presentation/summary/ui/SummaryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -102,5 +104,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: SignIn());
+        
   }
 }
