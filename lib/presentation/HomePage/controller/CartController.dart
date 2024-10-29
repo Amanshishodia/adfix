@@ -1,4 +1,5 @@
 // cart_controller.dart
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartItem {
@@ -21,22 +22,37 @@ class CartController extends GetxController {
   RxList<CartItem> cartItems = <CartItem>[].obs;
   RxDouble total = 0.0.obs;
 
+  // Add this to save cart data when app closes
+  @override
+  void onClose() {
+    // Here you could add persistence if needed
+    super.onClose();
+  }
+
   void addItem(CartItem item) {
-    final existingItem = cartItems.firstWhere(
+    final existingItemIndex = cartItems.indexWhere(
       (element) => element.id == item.id,
-      orElse: () => item,
     );
 
-    if (!cartItems.contains(existingItem)) {
+    if (existingItemIndex >= 0) {
+      // Item exists, increment quantity
+      cartItems[existingItemIndex].quantity++;
+    } else {
+      // New item, add to cart
       cartItems.add(item);
-      Get.snackbar(
-        'Success',
-        'Item added to cart',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 2),
-      );
     }
+
     calculateTotal();
+
+    Get.snackbar(
+      'Added to Cart',
+      '${item.name} added to cart',
+      snackPosition: SnackPosition.TOP,
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.green[900],
+      colorText: Colors.white,
+      margin: EdgeInsets.all(8),
+    );
   }
 
   void removeItem(String id) {
@@ -45,19 +61,23 @@ class CartController extends GetxController {
   }
 
   void incrementQuantity(String id) {
-    final item = cartItems.firstWhere((item) => item.id == id);
-    item.quantity++;
-    calculateTotal();
+    final itemIndex = cartItems.indexWhere((item) => item.id == id);
+    if (itemIndex >= 0) {
+      cartItems[itemIndex].quantity++;
+      calculateTotal();
+    }
   }
 
   void decrementQuantity(String id) {
-    final item = cartItems.firstWhere((item) => item.id == id);
-    if (item.quantity > 1) {
-      item.quantity--;
-    } else {
-      removeItem(id);
+    final itemIndex = cartItems.indexWhere((item) => item.id == id);
+    if (itemIndex >= 0) {
+      if (cartItems[itemIndex].quantity > 1) {
+        cartItems[itemIndex].quantity--;
+      } else {
+        cartItems.removeAt(itemIndex);
+      }
+      calculateTotal();
     }
-    calculateTotal();
   }
 
   void calculateTotal() {

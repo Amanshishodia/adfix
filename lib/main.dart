@@ -2,6 +2,7 @@ import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'appBinding.dart';
 
 void main() {
   WidgetsFlutterBinding
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        initialBinding: AppBinding(),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(

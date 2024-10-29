@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../widgets/PersistantCartWidget.dart';
 import '../../HomePage/controller/CartController.dart';
 import '../../HomePage/widget/EachItemListTile.dart';
 import '../Controller/DetailPageContoller.dart';
@@ -271,6 +272,12 @@ class DetailsPage extends StatelessWidget {
                     )
                   : SizedBox.shrink();
             }),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: CartSummaryWidget(),
+            ),
           ],
         ),
       ),
