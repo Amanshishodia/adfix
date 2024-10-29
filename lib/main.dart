@@ -1,3 +1,5 @@
+import 'package:adfix/presentation/Payment/ui/payment.dart';
+import 'package:adfix/presentation/Payment/ui/rideTrackingPage.dart';
 import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
 import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
 import 'package:adfix/presentation/summary/ui/SummaryPage.dart';
@@ -103,7 +105,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SignIn());
-        
+        // home: SignIn());
+        home: RideTrackingPage());
   }
 }
