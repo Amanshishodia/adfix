@@ -1,21 +1,26 @@
+import 'package:adfix/presentation/auth/controller/AuthController.dart';
 import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
-import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
-import 'package:adfix/presentation/summary/ui/SummaryPage.dart';
+import 'package:adfix/presentation/bottomNav/ui/myHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
 import 'appBinding.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized
+  await GetStorage.init();
   SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky); // Set immersive sticky mode
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final AuthController authController = Get.put(AuthController());
 
   // This widget is the root of your application.
   @override
@@ -105,7 +110,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SignIn());
-        
+        home: Obx(() => authController.isLoggedIn.value ? Myhome() : SignIn()));
   }
 }

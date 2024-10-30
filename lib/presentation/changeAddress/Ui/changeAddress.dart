@@ -1,149 +1,144 @@
-import 'package:adfix/presentation/changeAddress/widgets/changeButton.dart';
-import 'package:adfix/presentation/changeAddress/widgets/editableTextField.dart';
-import 'package:adfix/presentation/changeAddress/widgets/saveButton.dart';
-import 'package:adfix/widgets/textfield.dart';
+// lib/pages/save_address_page.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ChangeAddressPage extends StatefulWidget {
-  const ChangeAddressPage({Key? key}) : super(key: key);
+import '../AddressController.dart';
 
-  @override
-  _ChangeAddressPageState createState() => _ChangeAddressPageState();
-}
+class SaveAddressPage extends StatelessWidget {
+  final addressController = Get.put(AddressController());
 
-class _ChangeAddressPageState extends State<ChangeAddressPage> {
-  final TextEditingController addressController = TextEditingController();
+  SaveAddressPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        leading: BackButton(color: Colors.black),
-        title: Text('Manage Addresses',
-            style: TextStyle(color: Colors.black, fontSize: 16)),
-        backgroundColor: Colors.white,
-        elevation: 1,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 12),
-              Image.asset(
-                'assets/images/googleMap.png',
-                scale: 4.5,
-              ),
-              SizedBox(height: 18),
-              Text('Block A',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      child: Text('House No. 123, 2nd Floor, Block A',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400))),
-                  Changebutton(text1: "Change")
-                ],
-              ),
-              Divider(),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: CustomTextfield(
-                    controller: addressController, // Set the controller
-                    label: "House/flat Number*",
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: CustomTextfield(
-                    controller: addressController, // Set the controller
-                    label: "House/flat Number*",
-                  ),
-                ),
-              ),
-              SizedBox(height: 8),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-                child: Text('Save as',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal)),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Savebutton(text1: "Home"),
-                  Savebutton(text1: "Others")
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  EditableTextField(initialText: "123-456-7890"),
-                  SizedBox(height: 10),
-                ],
-              )
-            ],
-          ),
+        title: Text('Add New Address'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Get.back(),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 4,
-              offset: Offset(0, -2),
-            ),
+      body: Obx(() => Stack(
+            children: [
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: Image.asset('assets/images/googleMap.png'),
+                      ),
+                    ),
+                    _buildAddressTypeSection(),
+                    SizedBox(height: 24),
+                    _buildAddressForm(),
+                    SizedBox(height: 24),
+                    _buildSaveButton(),
+                  ],
+                ),
+              ),
+              if (addressController.isLoading.value)
+                Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+            ],
+          )),
+    );
+  }
+
+  Widget _buildAddressTypeSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Address Type',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 8),
+        Row(
+          children: [
+            _addressTypeButton('Home'),
+            SizedBox(width: 16),
+            _addressTypeButton('Work'),
+            SizedBox(width: 16),
+            _addressTypeButton('Other'),
           ],
         ),
-        child: SafeArea(
-          child: TextButton(
-            onPressed: () {
-              // _showServiceDetails(context);
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              padding: EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Text(
-              'Save and proceed to slots',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+      ],
+    );
+  }
+
+  Widget _addressTypeButton(String type) {
+    return Obx(() => OutlinedButton(
+          onPressed: () => addressController.setAddressType(type),
+          style: OutlinedButton.styleFrom(
+            backgroundColor: addressController.selectedAddressType.value == type
+                ? Colors.blue[50]
+                : null,
+            side: BorderSide(
+              color: addressController.selectedAddressType.value == type
+                  ? Colors.blue
+                  : Colors.grey,
             ),
           ),
+          child: Text(type),
+        ));
+  }
+
+  Widget _buildAddressForm() {
+    return Column(
+      children: [
+        TextField(
+          controller: addressController.houseNumberController,
+          decoration: InputDecoration(
+            labelText: 'House/Flat Number *',
+            border: OutlineInputBorder(),
+          ),
         ),
+        SizedBox(height: 16),
+        TextField(
+          controller: addressController.streetController,
+          decoration: InputDecoration(
+            labelText: 'Street/Area *',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        SizedBox(height: 16),
+        TextField(
+          controller: addressController.landmarkController,
+          decoration: InputDecoration(
+            labelText: 'Landmark (Optional)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        SizedBox(height: 16),
+        TextField(
+          controller: addressController.phoneController,
+          keyboardType: TextInputType.phone,
+          decoration: InputDecoration(
+            labelText: 'Phone Number *',
+            border: OutlineInputBorder(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: addressController.isLoading.value
+            ? null
+            : () => addressController.saveAddress(),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 16),
+        ),
+        child: Text('Save Address'),
       ),
     );
   }

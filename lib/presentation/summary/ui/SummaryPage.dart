@@ -1,4 +1,6 @@
+import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ServiceSummaryPage extends StatelessWidget {
   const ServiceSummaryPage({Key? key}) : super(key: key);
@@ -475,7 +477,9 @@ class ServiceSummaryPage extends StatelessWidget {
         ),
         child: SafeArea(
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(SaveAddressPage());
+            },
             style: TextButton.styleFrom(
               backgroundColor: Colors.deepPurple,
               padding: EdgeInsets.symmetric(vertical: 16),
