@@ -1,109 +1,70 @@
+import 'package:adfix/presentation/auth/controller/AuthController.dart';
 import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
-import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
-import 'package:adfix/presentation/summary/ui/SummaryPage.dart';
+import 'package:adfix/presentation/bottomNav/ui/myHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
-  WidgetsFlutterBinding
-      .ensureInitialized(); // Ensure Flutter bindings are initialized
-  SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.immersiveSticky); // Set immersive sticky mode
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+
+  // Set preferred orientations
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  // Set system UI mode
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
-  // This widget is the root of your application.
+  final AuthController authController = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          textTheme: TextTheme(
-            displayLarge: TextStyle(
-              fontSize: 48.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+      debugShowCheckedModeBanner: false,
+      title: 'ADFIX',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: Obx(() {
+        // Show loading during authentication check
+        if (authController.isLoading.value) {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Authenticating...',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            displayMedium: TextStyle(
-              fontSize: 36.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            displaySmall: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            headlineLarge: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            headlineMedium: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-            headlineSmall: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-            titleLarge: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-            titleMedium: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-            titleSmall: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-            bodyLarge: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
-            ),
-            bodyMedium: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
-            ),
-            bodySmall: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
-            ),
-            labelLarge: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-            labelMedium: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-            labelSmall: TextStyle(
-              fontSize: 10.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-          ),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: SignIn());
-        
+          );
+        }
+
+        // Routing based on login status
+        return authController.isLoggedIn.value ? Myhome() : SignIn();
+      }),
+    );
   }
 }
