@@ -1,39 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class DateButton extends StatefulWidget {
-  final String text1;
-  final String text2;
+class DateButton extends StatelessWidget {
+  final DateTime date;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-  DateButton({required this.text1, required this.text2});
-
-  @override
-  _DateButtonState createState() => _DateButtonState();
-}
-
-class _DateButtonState extends State<DateButton> {
-  bool _isTapped = false;
+  const DateButton({
+    Key? key,
+    required this.date,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _isTapped = !_isTapped;
-        });
-      },
+      onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 18),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 18),
         decoration: BoxDecoration(
-          color: _isTapped ? Colors.purple[100] : Colors.white,
-          border: Border.all(color: const Color.fromARGB(255, 102, 50, 207)),
-          borderRadius: BorderRadius.circular(5), 
+          color: isSelected ? Colors.purple[100] : Colors.white,
+          border: Border.all(
+            color: const Color.fromARGB(255, 102, 50, 207),
+          ),
+          borderRadius: BorderRadius.circular(5),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(widget.text1),
-            Text(widget.text2),
+            Text(
+              DateFormat('EEE').format(date),
+              // Ensure date is formatted correctly
+              style: TextStyle(
+                color: isSelected ? Colors.deepPurple : Colors.black87,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              date.day.toString(),
+              style: TextStyle(
+                color: isSelected ? Colors.deepPurple : Colors.black87,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),

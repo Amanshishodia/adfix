@@ -1,8 +1,12 @@
 // lib/pages/save_address_page.dart
+import 'dart:ui';
+
+import 'package:adfix/presentation/summary/ui/SummaryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../AddressController.dart';
+import '../controller/AddressController.dart';
+import '../controller/DateandTimeController.dart';
 
 class SaveAddressPage extends StatelessWidget {
   final addressController = Get.put(AddressController());
@@ -36,7 +40,7 @@ class SaveAddressPage extends StatelessWidget {
                     SizedBox(height: 24),
                     _buildAddressForm(),
                     SizedBox(height: 24),
-                    _buildSaveButton(),
+                    _buildSaveButton(context),
                   ],
                 ),
               ),
@@ -128,18 +132,120 @@ class SaveAddressPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSaveButton() {
-    return SizedBox(
+  Widget _buildSaveButton(BuildContext context) {
+    return Container(
       width: double.infinity,
+
+      // Set your desired color here
       child: ElevatedButton(
         onPressed: addressController.isLoading.value
             ? null
-            : () => addressController.saveAddress(),
+            : () async {
+                await addressController.saveAddress();
+                _showServiceDetails(context);
+              },
         style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xff9263FF),
           padding: EdgeInsets.symmetric(vertical: 16),
         ),
-        child: Text('Save Address'),
+        child: Text(
+          'Save and proceed to slots',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
+}
+
+void _showServiceDetails(BuildContext context) {
+  // Initialize the controller
+  final dateTimeController = Get.put(DateTimeController());
+
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) {
+      return Stack(
+        children: [
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(color: Colors.black.withOpacity(0.5)),
+          ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.8,
+            maxChildSize: 0.85,
+            minChildSize: 0.7,
+            builder: (_, scrollController) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: const DateTimeSelectionSection(),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(0, -2),
+                          ),
+                        ],
+                      ),
+                      child: SafeArea(
+                        child: Obx(() => TextButton(
+                              onPressed:
+                                  dateTimeController.selectedDate.value !=
+                                              null &&
+                                          dateTimeController
+                                              .selectedTime.value.isNotEmpty
+                                      ? () {
+                                          // Handle checkout
+                                          Get.to(
+                                              ServiceSummaryPage()); // or navigate to checkout
+                                        }
+                                      : null,
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.deepPurple,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'Proceed to checkout',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

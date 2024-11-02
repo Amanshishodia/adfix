@@ -1,15 +1,14 @@
-import 'dart:convert';
-
+// lib/controller/AddressController.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 
 class AddressController extends GetxController {
   final storage = GetStorage();
   var isLoading = false.obs;
   var addresses = [].obs;
   var selectedAddressType = "Home".obs;
+  var selectedAddress = Rxn<Map<String, dynamic>>();
 
   // Form controllers
   final TextEditingController houseNumberController = TextEditingController();
@@ -37,7 +36,11 @@ class AddressController extends GetxController {
     try {
       final savedAddresses = storage.read('addresses') ?? [];
       addresses.value = List<Map<String, dynamic>>.from(savedAddresses);
-      await fetchAddressesFromServer();
+      // If there's a selected address, try to find it in the loaded addresses
+      final savedSelectedAddress = storage.read('selectedAddress');
+      if (savedSelectedAddress != null) {
+        selectedAddress.value = savedSelectedAddress;
+      }
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -46,29 +49,6 @@ class AddressController extends GetxController {
       );
     } finally {
       isLoading(false);
-    }
-  }
-
-  Future<void> fetchAddressesFromServer() async {
-    try {
-      final token = storage.read('token');
-      final response = await http.get(
-        Uri.parse('https://ankitadfixapi.onrender.com/addresses'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final List<dynamic> serverAddresses = json.decode(response.body);
-        addresses.value = serverAddresses.cast<Map<String, dynamic>>();
-        await storage.write('addresses', addresses);
-      } else {
-        throw 'Failed to fetch addresses';
-      }
-    } catch (e) {
-      print('Error fetching addresses: $e');
     }
   }
 
@@ -92,30 +72,23 @@ class AddressController extends GetxController {
         'phone': phoneController.text,
       };
 
-      final token = storage.read('token');
-      final response = await http.post(
-        Uri.parse('https://ankitadfixapi.onrender.com/addAddress'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: json.encode(newAddress),
-      );
+      // Add the new address to the list
+      addresses.add(newAddress);
 
-      if (response.statusCode == 201) {
-        final serverAddress = json.decode(response.body);
-        addresses.add(serverAddress);
-        await storage.write('addresses', addresses.toList());
-        _clearInputs();
-        Get.snackbar(
-          'Success',
-          'Address saved successfully',
-          backgroundColor: Colors.green[100],
-        );
-        Get.back();
-      } else {
-        throw 'Failed to save address';
-      }
+      // Save to local storage
+      await storage.write('addresses', addresses.toList());
+
+      // Set as selected address
+      selectedAddress.value = newAddress;
+      await storage.write('selectedAddress', newAddress);
+
+      _clearInputs();
+      Get.snackbar(
+        'Success',
+        'Address saved successfully',
+        backgroundColor: Colors.green[100],
+      );
+      Get.back();
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -125,6 +98,19 @@ class AddressController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  void selectAddress(Map<String, dynamic> address) {
+    selectedAddress.value = address;
+    storage.write('selectedAddress', address);
+  }
+
+  String get formattedSelectedAddress {
+    if (selectedAddress.value == null) return 'No address selected';
+    final address = selectedAddress.value!;
+    return '${address['houseNumber']}, ${address['street']}'
+        '${address['landmark']?.isNotEmpty == true ? ', ${address['landmark']}' : ''}'
+        ' (${address['type']})';
   }
 
   bool _validateInputs() {

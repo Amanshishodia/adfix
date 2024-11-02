@@ -1,53 +1,49 @@
 import 'package:flutter/material.dart';
 
-class TimeButton extends StatefulWidget {
-  final String text1;
+class TimeButton extends StatelessWidget {
+  final String time;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-  TimeButton({
-    required this.text1,
-  });
-
-  @override
-  _TimeButtonState createState() => _TimeButtonState();
-}
-
-class _TimeButtonState extends State<TimeButton> {
-  bool _isTapped = false;
+  const TimeButton({
+    Key? key,
+    required this.time,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _isTapped = !_isTapped;
-        });
-      },
+      onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+        height: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
         decoration: BoxDecoration(
-          color: _isTapped ? Colors.purple[100] : Colors.white,
-          border: Border.all(color: const Color.fromARGB(255, 214, 214, 214)),
+          color: isSelected ? Colors.purple[100] : Colors.white,
+          border: Border.all(
+            color: const Color.fromARGB(255, 214, 214, 214),
+          ),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(0, 3), 
+              offset: const Offset(0, 3),
             ),
           ],
         ),
-        padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // mainAxisSize: MainAxisSize.min,
-
-          children: [
-            Text(
-              widget.text1,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: Center(
+          child: Text(
+            time,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: isSelected ? FontWeight.w500 : FontWeight.w300,
+              color: isSelected ? Colors.deepPurple : Colors.black87,
             ),
-          ],
+          ),
         ),
       ),
     );
