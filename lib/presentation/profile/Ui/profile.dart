@@ -1,10 +1,12 @@
 import 'package:adfix/presentation/profile/Ui/ProfileEditPage/ProfileEditPage.dart';
+import 'package:adfix/presentation/profile/Ui/myBookingPage/myBookingPage.dart';
 import 'package:adfix/presentation/profile/widget/Logout_Button.dart';
 import 'package:adfix/presentation/profile/widget/cardWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widget/Profile_Items.dart';
+import 'helpPage/ui/helpPage.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -65,7 +67,9 @@ class Profile extends StatelessWidget {
                 CardWidget(
                   image: "assets/images/Notes.png",
                   text: "My Booking",
-                  ontap: () {},
+                  ontap: () {
+                    Get.to(MyBookingPage());
+                  },
                 ),
                 CardWidget(
                   image: "assets/images/Wallet.png",
@@ -75,7 +79,9 @@ class Profile extends StatelessWidget {
                 CardWidget(
                   image: "assets/images/Headphones.png",
                   text: "Help & Support",
-                  ontap: () {},
+                  ontap: () {
+                    Get.to(HelpPage());
+                  },
                 ),
               ],
             ),

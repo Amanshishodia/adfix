@@ -1,4 +1,9 @@
+import 'package:adfix/presentation/auth/controller/AuthController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../bottomNav/ui/myHome.dart';
+import '../sign_in/sign_in.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -7,6 +12,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
+  final AuthController authController = Get.put(AuthController());
   late AnimationController _personController;
   late Animation<double> _personAnimation;
   late AnimationController _textController;
@@ -25,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Person movement animation
     _personAnimation =
-        Tween<double>(begin: -100, end: 72).animate(CurvedAnimation(
+        Tween<double>(begin: -100, end: 40).animate(CurvedAnimation(
       parent: _personController,
       curve: Curves.easeInOut,
     ))
@@ -47,9 +53,15 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Start the animations
     _personController.forward().whenComplete(() {
-      _textController.forward();
+      _textController.forward().whenComplete(() {
+        // After the animation, navigate based on login status
+        if (authController.isLoggedIn.value) {
+          Get.off(() => Myhome());
+        } else {
+          Get.off(() => SignIn());
+        }
+      });
     });
-
     // Hide the shadow after the animation starts
     Future.delayed(Duration(seconds: 3), () {
       setState(() {
@@ -92,7 +104,8 @@ class _SplashScreenState extends State<SplashScreen>
             left: _personAnimation.value,
             top: screenHeight * 0.5 - 40,
             child: Image.asset(
-              'assets/images/person.png', // replace with your running person image
+              'assets/images/person.png',
+              // replace with your running person image
               width: screenWidth * 0.2,
               height: screenHeight * 0.1,
               color: Colors.yellow,
@@ -106,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(width: screenWidth * 0.37),
+                  SizedBox(width: screenWidth * 0.27),
                   Image.asset(
                     'assets/images/logo.png', // same image for continuity
                     width: screenWidth * 0.6,

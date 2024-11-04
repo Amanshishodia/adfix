@@ -1,4 +1,6 @@
+import 'package:adfix/presentation/profile/Ui/helpPage/ui/account.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HelpPage extends StatelessWidget {
   @override
@@ -38,6 +40,7 @@ class HelpPage extends StatelessWidget {
                       title: Text('Account'),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
+                        Get.to(AccountPage());
                         // Navigate to Account page
                       },
                     ),

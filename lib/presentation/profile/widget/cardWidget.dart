@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
   final String image;
-  final Function ontap;
+  final VoidCallback? ontap;
 
   final String text;
 
-  const CardWidget(
-      {super.key,
-      required this.text,
-      required this.image,
-      required this.ontap});
+  const CardWidget({
+    super.key,
+    required this.text,
+    required this.image,
+    required this.ontap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ontap(),
+      onTap: ontap,
       child: Container(
         height: 71,
         width: 92,

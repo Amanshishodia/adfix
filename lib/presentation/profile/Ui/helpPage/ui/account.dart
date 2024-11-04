@@ -1,5 +1,6 @@
+import 'package:adfix/presentation/auth/ui/changePhoneNo/changePhone.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
   @override
@@ -36,6 +37,7 @@ class AccountPage extends StatelessWidget {
                     title: Text('I want to change my phone number'),
                     trailing: Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () {
+                      Get.to(ChangePhoneNumberPage());
                       // Navigate to Getting Started page
                     },
                   ),
