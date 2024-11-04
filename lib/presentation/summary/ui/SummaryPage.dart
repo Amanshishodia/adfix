@@ -1,14 +1,97 @@
-import 'dart:ui';
-
-import 'package:adfix/presentation/summary/widgets/dateButton.dart';
-import 'package:adfix/presentation/summary/widgets/timeButton.dart';
+import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../HomePage/controller/CartController.dart';
+import '../../Payment/ui/payment.dart';
+import '../../changeAddress/controller/AddressController.dart';
+import '../../changeAddress/controller/DateandTimeController.dart';
 
 class ServiceSummaryPage extends StatelessWidget {
-  const ServiceSummaryPage({Key? key}) : super(key: key);
+  ServiceSummaryPage({Key? key}) : super(key: key);
+  final CartController cartController = Get.find<CartController>();
+
+  Widget _buildCartItem(CartItem item) {
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: Image.network(
+                    item.imageUrl,
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      width: 48,
+                      height: 48,
+                      color: Colors.grey[200],
+                      child: Icon(Icons.error_outline, color: Colors.grey),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    item.name,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                height: 32,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.deepPurple),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.remove,
+                          size: 18, color: Colors.deepPurple),
+                      onPressed: () =>
+                          cartController.decrementQuantity(item.id),
+                    ),
+                    Obx(() => Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Text('${item.quantity.value}',
+                              style: TextStyle(fontSize: 14)),
+                        )),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.add, size: 18, color: Colors.deepPurple),
+                      onPressed: () =>
+                          cartController.incrementQuantity(item.id),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 12),
+              Obx(() => Text(
+                    '₹${(item.price * item.quantity.value).toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 15),
+                  )),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final dateTimeController = Get.put(DateTimeController());
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -50,72 +133,7 @@ class ServiceSummaryPage extends StatelessWidget {
             Divider(height: 1, thickness: 1),
 
             // AC Service Section
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'AC Service | Split',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 32,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.deepPurple),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 32,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.remove,
-                                    size: 18, color: Colors.deepPurple),
-                                onPressed: () {},
-                              ),
-                            ),
-                            Container(
-                              width: 1,
-                              height: 32,
-                              color: Colors.deepPurple,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              child: Text('1', style: TextStyle(fontSize: 14)),
-                            ),
-                            Container(
-                              width: 1,
-                              height: 32,
-                              color: Colors.deepPurple,
-                            ),
-                            SizedBox(
-                              width: 32,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.add,
-                                    size: 18, color: Colors.deepPurple),
-                                onPressed: () {},
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        '₹349',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
+            ...cartController.cartItems.map(_buildCartItem).toList(),
             // Adfix cover
             Container(
               color: Colors.white,
@@ -293,71 +311,76 @@ class ServiceSummaryPage extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Payment summary',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Item total', style: TextStyle(fontSize: 14)),
-                      Text('₹349', style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Item discount', style: TextStyle(fontSize: 14)),
-                      Text('-₹100',
-                          style: TextStyle(fontSize: 14, color: Colors.green)),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Taxes and fee', style: TextStyle(fontSize: 14)),
-                      Text('₹89', style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                  SizedBox(height: 12),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.green[50],
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Yay! You have saved 100 on final bill',
-                        style: TextStyle(color: Colors.green, fontSize: 13),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total',
+              child: Obx(() {
+                final double itemTotal = cartController.total.value;
+                final double taxes = itemTotal * 0.18; // Assuming 18% tax
+                final double discount = 100.0; // Fixed discount amount
+                final double finalTotal = itemTotal + taxes - discount;
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Payment summary',
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
+                            fontSize: 15, fontWeight: FontWeight.w500)),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Item total', style: TextStyle(fontSize: 14)),
+                        Text('₹${itemTotal.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Item discount', style: TextStyle(fontSize: 14)),
+                        Text('-₹${discount.toStringAsFixed(2)}',
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.green)),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Taxes and fee', style: TextStyle(fontSize: 14)),
+                        Text('₹${taxes.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.green[50],
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      Text(
-                        '₹338',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
+                      child: Center(
+                        child: Text(
+                          'Yay! You have saved ₹${discount.toStringAsFixed(0)} on final bill',
+                          style: TextStyle(color: Colors.green, fontSize: 13),
+                        ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w500)),
+                        Text('₹${finalTotal.toStringAsFixed(2)}',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
 
             // Cancellation Policy
@@ -393,8 +416,11 @@ class ServiceSummaryPage extends StatelessWidget {
                 ],
               ),
             ),
+            _buildAddressSection(),
 
             SizedBox(height: 8),
+            Divider(),
+            _buildDateTimeSection(),
 
             // Tip Section
             Container(
@@ -478,189 +504,175 @@ class ServiceSummaryPage extends StatelessWidget {
           ],
         ),
         child: SafeArea(
-          child: TextButton(
-            onPressed: () {
-              _showServiceDetails(context);
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              padding: EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+          child: Obx(() {
+            final dateTimeController = Get.find<DateTimeController>();
+            final addressController = Get.find<AddressController>();
+
+            // Check if both address and date/time are selected
+            bool isAddressSelected =
+                addressController.selectedAddress.value != null;
+            bool isDateTimeSelected =
+                dateTimeController.selectedDate.value != null &&
+                    dateTimeController.selectedTime.value.isNotEmpty;
+
+            return TextButton(
+              onPressed: () {
+                if (isAddressSelected && isDateTimeSelected) {
+                  // If both are selected, navigate to payment page
+                  Get.to(PaymentPage());
+                } else {
+                  // If either is missing, navigate to address page
+                  Get.to(SaveAddressPage());
+                }
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-            ),
-            child: Text(
-              'Add address and slot',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+              child: Text(
+                isAddressSelected && isDateTimeSelected
+                    ? 'Proceed to Payment'
+                    : 'Add address and slots',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
       ),
     );
   }
+}
 
-  void _showServiceDetails(
-    BuildContext context,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Stack(
+// In your ServiceSummaryPage, add this widget where you want to show the address:
+Widget _buildAddressSection() {
+  final dateTimeController = Get.put(DateTimeController());
+  final addressController = Get.put(AddressController());
+
+  return Container(
+    color: Colors.white,
+    padding: EdgeInsets.all(16),
+    margin: EdgeInsets.only(bottom: 8),
+    child: Obx(() => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(color: Colors.black.withOpacity(0.5)),
-            ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.8,
-              maxChildSize: 0.85,
-              minChildSize: 0.7,
-              builder: (_, scrollController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
+            Row(
+              children: [
+                Icon(Icons.location_on_outlined,
+                    size: 20, color: Colors.grey[700]),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    addressController.formattedSelectedAddress,
+                    style: TextStyle(fontSize: 14),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 15),
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/images/Home2.png',
-                              // width: 50,
-                              height: 20,
-                            ),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'Lorem ipsum dolor sit amet',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                            Icon(Icons.arrow_forward_ios,
-                                size: 16, color: Colors.grey),
-                          ],
-                        ),
-                        SizedBox(height: 25),
-                        const Text(
-                          "Lorem ipsum dolor sit amet, consectetur?",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          "Lorem ipsum dolor sit amet, consectetur?",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            DateButton(text1: 'Thu', text2: '3'),
-                            DateButton(text1: 'Thu', text2: '3'),
-                            DateButton(text1: 'Thu', text2: '3'),
-                          ],
-                        ),
-                        const Text(
-                          "Lorem ipsum dolor sit amet, consectetur?",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 2.5,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: 15,
-                          itemBuilder: (context, index) {
-                            return TimeButton(
-                              text1: '10:00 AM',
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4,
-                      offset: Offset(0, -2),
-                    ),
-                  ],
                 ),
-                child: SafeArea(
-                  child: TextButton(
-                    onPressed: () {
-                      // _showServiceDetails(context);
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                TextButton(
+                  onPressed: () {
+                    if (dateTimeController.selectedDate.value != null) {
+                      // Navigate to the page for selecting additional details
+                      Get.to(
+                          PaymentPage()); // Replace NextPage with your actual page class
+                    } else {
+                      // Navigate to the address selection page
+                      Get.to(SaveAddressPage()); // Adjust your logic as needed
+                    }
+                  },
+                  child: Text(
+                    addressController.selectedAddress.value == null
+                        ? 'Add'
+                        : 'Change',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
-                    child: Text(
-                      'Proceed to checkout',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )),
+  );
+}
+
+// Add this new widget for date and time display
+Widget _buildDateTimeSection() {
+  final dateTimeController = Get.put(DateTimeController());
+
+  String formatDate(DateTime? date) {
+    if (date == null) return 'Select date';
+    return '${date.day}/${date.month}/${date.year}';
+  }
+
+  return Container(
+    color: Colors.white,
+    padding: EdgeInsets.all(16),
+    child: Obx(() => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.access_time, size: 20, color: Colors.grey[700]),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Schedule',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
+                      SizedBox(height: 4),
+                      Text(
+                        dateTimeController.selectedDate.value != null &&
+                                dateTimeController.selectedTime.value.isNotEmpty
+                            ? '${formatDate(dateTimeController.selectedDate.value)} at ${dateTimeController.selectedTime.value}'
+                            : 'Select date and time',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    dateTimeController.selectedDate.value != null
+                        ? 'Change'
+                        : 'Add',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
+                  ),
+                ),
+              ],
+            ),
+            if (dateTimeController.selectedDate.value != null)
+              Padding(
+                padding: EdgeInsets.only(left: 32, top: 4),
+                child: Text(
+                  'Service will take approx. 1hr and 30 mins',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey[600],
                   ),
                 ),
               ),
-            ),
           ],
-        );
-      },
-    );
-  }
+        )),
+  );
 }

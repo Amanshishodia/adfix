@@ -1,27 +1,37 @@
-import 'package:adfix/presentation/Payment/ui/payment.dart';
-import 'package:adfix/presentation/Payment/ui/rideTrackingPage.dart';
+import 'package:adfix/presentation/auth/controller/AuthController.dart';
+import 'package:adfix/presentation/auth/ui/changePhoneNo/changePhone.dart';
+import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
-import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
-import 'package:adfix/presentation/summary/ui/SummaryPage.dart';
+import 'package:adfix/presentation/auth/ui/splashScreen/splashScreen.dart';
+import 'package:adfix/presentation/bottomNav/ui/myHome.dart';
+import 'package:adfix/presentation/changeAddress/controller/AddressController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+import 'appBinding.dart';
+
+void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized
+  Get.put(AddressController());
+  await GetStorage.init();
   SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky); // Set immersive sticky mode
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final AuthController authController = Get.put(AuthController());
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        initialBinding: AppBinding(),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -105,7 +115,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // home: splash());
-        home: ServiceSummaryPage());
+        
+    home: Obx(() => authController.isLoggedIn.value ? Myhome() : SignIn()));
   }
 }
