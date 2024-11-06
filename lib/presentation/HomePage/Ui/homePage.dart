@@ -115,7 +115,7 @@ class Homepage extends StatelessWidget {
               ),
             ),
             Container(
-              height: 483,
+              height: 400,
               child: Column(
                 children: [
                   GridView.builder(
@@ -146,36 +146,31 @@ class Homepage extends StatelessWidget {
                       );
                     },
                   ),
-                  // Bottom Grid Section with two cards
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 0.0,
-                      mainAxisSpacing: 8.0,
-                      //
-                    ),
-                    itemCount: _twoCards.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Using Get.to() for navigation
-                          Get.to(
-                            () => DetailsPage(
-                              itemType: _twoCards[index]['type']!,
-                              image: _twoCards[index]['image']!,
-                            ),
-                          );
-                        },
-                        child: CustomTwoCard(
-                          image: _twoCards[index]['image']!,
-                          text: _twoCards[index]['text']!,
+                 
+                  Wrap(
+                    spacing: 0.0,
+                    runSpacing: 0.0,
+                    children: _twoCards.map((card) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width /
+                            2, // Half of the screen width
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(
+                              () => DetailsPage(
+                                itemType: card['type']!,
+                                image: card['image']!,
+                              ),
+                            );
+                          },
+                          child: CustomTwoCard(
+                            image: card['image']!,
+                            text: card['text']!,
+                          ),
                         ),
                       );
-                    },
-                  ),
+                    }).toList(),
+                  )
                 ],
               ),
             ),

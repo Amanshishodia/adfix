@@ -1,5 +1,8 @@
+import 'package:adfix/presentation/HomePage/Ui/homePage.dart';
 import 'package:adfix/presentation/auth/controller/AuthController.dart';
 import 'package:adfix/presentation/auth/ui/splashScreen/splashScreen.dart';
+import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
+// import 'package:adfix/presentation/changeAddress/Ui/setAddressPage.dart';
 import 'package:adfix/presentation/changeAddress/controller/AddressController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -111,7 +114,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SplashScreen());
+        home: Homepage());
   }
 }
 //Obx(() => authController.isLoggedIn.value ? Myhome() : SignIn())

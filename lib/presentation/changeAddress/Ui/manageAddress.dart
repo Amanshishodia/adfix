@@ -1,10 +1,12 @@
+import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ManageAddressesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, 
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
@@ -26,24 +28,20 @@ class ManageAddressesPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Divider(color: Colors.grey[300]),
-           
             Container(
-              
               child: TextButton.icon(
-              onPressed: () {
-              
-              },
-              icon: Icon(Icons.add, color: Colors.green[500]),
-              label: Text(
-                'Add another address',
-                style: TextStyle(color: Colors.green, fontSize: 16.0),
-              ),
+                onPressed: () {
+                  Get.to(SaveAddressPage());
+                },
+                icon: Icon(Icons.add, color: Colors.green[500]),
+                label: Text(
+                  'Add another address',
+                  style: TextStyle(color: Colors.green, fontSize: 16.0),
+                ),
               ),
             ),
             Divider(color: Colors.grey[300]),
             SizedBox(height: 16.0),
-            
-            
             Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -60,7 +58,6 @@ class ManageAddressesPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -72,33 +69,31 @@ class ManageAddressesPage extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                     
-                        PopupMenuButton<String>(
-                          icon: Icon(Icons.more_vert, color: Colors.black),
-                          color: Colors.white, 
-                          onSelected: (String value) {
-                            // Handle Edit/Delete actions here
-                            if (value == 'Edit') {
-                              // Navigate to edit address page
-                            } else if (value == 'Delete') {
-                              // Show delete confirmation dialog
-                            }
-                          },
-                          itemBuilder: (BuildContext context) => [
-                            PopupMenuItem<String>(
-                              value: 'Edit',
-                              child: Text('Edit'),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Delete',
-                              child: Text('Delete'),
-                            ),
-                          ],
-                        )
+                      PopupMenuButton<String>(
+                        icon: Icon(Icons.more_vert, color: Colors.black),
+                        color: Colors.white,
+                        onSelected: (String value) {
+                          // Handle Edit/Delete actions here
+                          if (value == 'Edit') {
+                            // Navigate to edit address page
+                          } else if (value == 'Delete') {
+                            // Show delete confirmation dialog
+                          }
+                        },
+                        itemBuilder: (BuildContext context) => [
+                          PopupMenuItem<String>(
+                            value: 'Edit',
+                            child: Text('Edit'),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'Delete',
+                            child: Text('Delete'),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                   SizedBox(height: 8.0),
-                
                   Text(
                     'Block A, Industrial Area, Sector 62, Noida,\nUttar Pradesh 201309, India',
                     style: TextStyle(
@@ -107,7 +102,6 @@ class ManageAddressesPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                 
                   Text(
                     'Somya, +91 8081942194',
                     style: TextStyle(
