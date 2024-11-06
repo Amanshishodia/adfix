@@ -1,8 +1,6 @@
-import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class ChangePhoneNumberPage extends StatelessWidget {
+class AboutAdfix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +19,7 @@ class ChangePhoneNumberPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "I want to change my phone number",
+              "What is Adfix company?",
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -30,36 +28,22 @@ class ChangePhoneNumberPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              "You can change your phone number from the profile section after verifying it with an OTP",
+              "Adfix company (formerly Adfix) is Asia's largest online home services  marketplace.it was started in 2020 by Abhiraj Singh Bhal, Varun Khaitan and Raghav Chandra.",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              "We currently operate in multiple cities in india, Singapore,Saudi Arabia and UAE.",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[700],
-                padding: EdgeInsets.symmetric(vertical: 18, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onPressed: () {
-                Get.to(EditProfilePage());
-              },
-              child: Text(
-                "Change phone number",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            
             Row(
               children: [
                 Text(

@@ -1,17 +1,15 @@
-import 'package:adfix/presentation/profile/Ui/aboutUsPage/Ui/aboutUs.dart';
+import 'package:adfix/presentation/profile/Ui/aboutUsPage/Ui/aboutAdfix.dart';
 import 'package:adfix/presentation/profile/Ui/helpPage/ui/account.dart';
-import 'package:adfix/presentation/profile/Ui/helpPage/ui/safetyMeasures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 
-class HelpPage extends StatelessWidget {
+class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -19,7 +17,7 @@ class HelpPage extends StatelessWidget {
             },
           ),
           title: Text(
-            'How can we help you?',
+            'Getting started with Adfix',
             style: TextStyle(
                 color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
           ),
@@ -29,10 +27,11 @@ class HelpPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10.0),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                 child: Text(
-                  'All topics',
+                  'About us',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -40,44 +39,50 @@ class HelpPage extends StatelessWidget {
                 child: ListView(
                   children: [
                     ListTile(
-                      title: Text('Account'),
+                      title: Text('what is Adfix Company?'),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
-                        Get.to(AccountPage());
+                        Get.to(AboutAdfix());
                         // Navigate to Account page
                       },
                     ),
+                     Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                child: Text(
+                  'Bookings',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
                     ListTile(
-                      title: Text('Getting started with Adfix'),
+                      title: Text('How to place a booking '),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
-                        Get.to(AboutPage());
                         // Navigate to Getting Started page
                       },
                     ),
                     ListTile(
-                      title: Text('Payment & Adfix Credits'),
+                      title: Text('Can I re-book the same professional if I like their serice?'),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         // Navigate to Payment page
                       },
                     ),
                     ListTile(
-                      title: Text('AD Plus Membership'),
+                      title: Text('How to book my preferred professional?'),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         // Navigate to Membership page
                       },
                     ),
                     ListTile(
-                      title: Text('Adfix Safety'),
+                      title: Text('Do I have to order a minimum value of services before I can place the booking?  '),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
-                        Get.to(SafetyMeasures());
+                        // Navigate to Safety page
                       },
                     ),
                     ListTile(
-                      title: Text('Warranty'),
+                      title: Text('Does Adfix Company charge any cancellation fee?'),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         // Navigate to Warranty page
