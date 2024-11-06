@@ -1,8 +1,6 @@
-import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class ChangePhoneNumberPage extends StatelessWidget {
+class SafetyMeasures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +19,7 @@ class ChangePhoneNumberPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "I want to change my phone number",
+              "Know more about Urban Company's safety measures",
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -30,36 +28,31 @@ class ChangePhoneNumberPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              "You can change your phone number from the profile section after verifying it with an OTP",
+              "At Adfix Company, the safety of teh customer and professinals is taken extremely seriously. To ensure this, we have taken the following precautionary measures:",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              "We conduct background verification on all our professionals ",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+            ),
+
+            SizedBox(height: 8),
+            Text(
+              "In case of any critical support, SOS button is availble in app for both our customers and professionals",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[700],
-                padding: EdgeInsets.symmetric(vertical: 18, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onPressed: () {
-                Get.to(EditProfilePage());
-              },
-              child: Text(
-                "Change phone number",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            
             Row(
               children: [
                 Text(

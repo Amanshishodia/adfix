@@ -1,3 +1,5 @@
+import 'package:adfix/presentation/Payment/ui/savedPaymentDetails.dart';
+import 'package:adfix/presentation/auth/ui/changeEmailAddress/ui/changeEmailAddress.dart';
 import 'package:adfix/presentation/auth/ui/changePhoneNo/changePhone.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,27 +45,27 @@ class AccountPage extends StatelessWidget {
                   ),
                   Divider(height: 1),
                   ListTile(
-                    title: Text('I want to change my phone number'),
+                    title: Text('Where can I check my saved addresses?'),
                     trailing: Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () {
+                      Get.to(SavedPaymentDetails());
                       // Navigate to Payment page
                     },
                   ),
                   Divider(height: 1),
                   ListTile(
-                    title: Text('I want to change my phone number'),
+                    title: Text('I want to change my email address'),
                     trailing: Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () {
+                      Get.to(ChangeEmailAddressPage());
                       // Navigate to Membership page
                     },
                   ),
                   Divider(height: 1),
                   ListTile(
-                    title: Text('I want to change my phone number'),
+                    title: Text('Where can I see my saved payment details?'),
                     trailing: Icon(Icons.arrow_forward_ios, size: 16),
-                    onTap: () {
-                      // Navigate to Safety page
-                    },
+                    onTap: () {},
                   ),
                   Divider(height: 1),
                 ],

@@ -2,7 +2,7 @@ import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChangePhoneNumberPage extends StatelessWidget {
+class SavedPaymentDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class ChangePhoneNumberPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "I want to change my phone number",
+              "Where can I see my saved payment deatils?",
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -30,7 +30,15 @@ class ChangePhoneNumberPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              "You can change your phone number from the profile section after verifying it with an OTP",
+              "You can check all your saved payment details by clicking the below button.",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              "If you wish to remove any saved payment details. you caneither unlink wallet account or delete the saved cards.",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
@@ -45,11 +53,9 @@ class ChangePhoneNumberPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () {
-                Get.to(EditProfilePage());
-              },
+              onPressed: () { Get.to(EditProfilePage());},
               child: Text(
-                "Change phone number",
+                "Change saved payments",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
