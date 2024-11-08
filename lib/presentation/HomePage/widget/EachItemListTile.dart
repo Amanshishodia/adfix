@@ -166,7 +166,7 @@ class _EachItemListTileState extends State<EachItemListTile> {
           ),
         ],
       ),
-      width: 107,
+      width: 106,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

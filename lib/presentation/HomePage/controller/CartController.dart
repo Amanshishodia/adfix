@@ -21,12 +21,17 @@ class CartItem {
 class CartController extends GetxController {
   RxList<CartItem> cartItems = <CartItem>[].obs;
   RxDouble total = 0.0.obs;
+  final _total = 0.0.obs;
 
   // Add this to save cart data when app closes
   @override
   void onClose() {
     // Here you could add persistence if needed
     super.onClose();
+  }
+
+  void updateTotalWithTip(double tipAmount) {
+    _total.value = _total.value + tipAmount;
   }
 
   void addItem(CartItem item) {
