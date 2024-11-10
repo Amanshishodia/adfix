@@ -17,7 +17,7 @@ class Myhome extends StatefulWidget {
 class _MyhomeState extends State<Myhome> {
   final BottomNavBarController controller = Get.put(BottomNavBarController());
   final List<Widget> _pages = [
-    Homepage(), // Replace with your actual page widgets
+    HomePage(), // Replace with your actual page widgets
     ListPage(),
     Profile(),
   ];

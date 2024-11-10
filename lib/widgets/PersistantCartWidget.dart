@@ -42,24 +42,10 @@ class CartSummaryWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${cartController.itemCount} ${cartController.itemCount == 1 ? 'item' : 'items'} in cart",
+                    "Congratulations ! 100 saved so far",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   SizedBox(width: 8),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      "₹${cartController.total.value.toStringAsFixed(2)}",
-                      style: TextStyle(
-                        color: Colors.green[900],
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -69,43 +55,16 @@ class CartSummaryWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Items in Cart:",
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 12,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "₹ ${cartController.total.value.toStringAsFixed(2)}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        SizedBox(
-                          height: 30,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: cartController.cartItems.length,
-                            itemBuilder: (context, index) {
-                              final item = cartController.cartItems[index];
-                              return Container(
-                                margin: EdgeInsets.only(right: 8),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  "${item.name} (${item.quantity})",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                        ]),
                   ),
                   ElevatedButton(
                     onPressed: () {

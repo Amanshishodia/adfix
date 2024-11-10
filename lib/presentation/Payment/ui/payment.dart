@@ -1,7 +1,73 @@
-import 'package:adfix/presentation/Payment/widgets/paymentSection.dart';
 import 'package:flutter/material.dart';
 
+class PaymentOption {
+  final String path;
+  final String text;
+
+  PaymentOption({
+    required this.path,
+    required this.text,
+  });
+}
+
+class PaymentSection extends StatelessWidget {
+  final String title;
+  final List<PaymentOption> options;
+
+  PaymentSection({
+    required this.title,
+    required this.options,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ...options
+            .map(
+              (option) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      option.path,
+                      width: 40,
+                      height: 40,
+                    ),
+                    SizedBox(width: 16),
+                    Text(
+                      option.text,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+            .toList(),
+      ],
+    );
+  }
+}
+
 class PaymentPage extends StatelessWidget {
+  final double amount;
+
+  PaymentPage({required this.amount});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +79,7 @@ class PaymentPage extends StatelessWidget {
             Text('Select payment method',
                 style: TextStyle(color: Colors.black)),
             Text(
-              'Amount to pay ₹1,187',
+              'Amount to pay ₹$amount',
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,

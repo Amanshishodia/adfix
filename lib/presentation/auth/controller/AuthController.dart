@@ -102,7 +102,7 @@ class AuthController extends GetxController {
       Get.offAll(() => Myhome());
     } else {
       isLoggedIn(false);
-      Get.offAll(() => Homepage());
+      Get.offAll(() => HomePage());
     }
   }
 
