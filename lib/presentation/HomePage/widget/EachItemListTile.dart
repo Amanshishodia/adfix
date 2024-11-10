@@ -80,6 +80,7 @@ class _EachItemListTileState extends State<EachItemListTile> {
               Expanded(
                 flex: 1,
                 child: Stack(
+                  clipBehavior: Clip.none,
                   alignment: Alignment.bottomCenter,
                   children: [
                     ClipRRect(
@@ -91,40 +92,44 @@ class _EachItemListTileState extends State<EachItemListTile> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Obx(() {
-                      final cartItem = cartController.cartItems.firstWhere(
-                        (item) => item.id == (widget.service.id ?? ''),
-                        orElse: () => CartItem(
-                          id: widget.service.id ?? DateTime.now().toString(),
-                          name: widget.service.serviceName,
-                          price: double.parse(
-                              widget.service.serviceCharge.toString()),
-                          imageUrl: widget.service.image.url,
-                          quantity: 0,
-                        ),
-                      );
+                    Positioned(
+                      bottom: -15, // Position it partially outside the image
+                      child: Obx(() {
+                        final cartItem = cartController.cartItems.firstWhere(
+                          (item) => item.id == (widget.service.id ?? ''),
+                          orElse: () => CartItem(
+                            id: widget.service.id ?? DateTime.now().toString(),
+                            name: widget.service.serviceName,
+                            price: double.parse(
+                                widget.service.serviceCharge.toString()),
+                            imageUrl: widget.service.image.url,
+                            quantity: 0,
+                          ),
+                        );
 
-                      return cartItem.quantity > 0
-                          ? _buildQuantityController(cartItem)
-                          : ElevatedButton(
-                              onPressed: () {
-                                _openDrawer(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shadowColor: Colors.black12,
-                                padding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                        return cartItem.quantity > 0
+                            ? _buildQuantityController(cartItem)
+                            : ElevatedButton(
+                                onPressed: () {
+                                  _openDrawer(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.black12,
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(color: Colors.grey[400]!),
+                                  ),
+                                  backgroundColor: Colors.white,
                                 ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                "Add",
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.black),
-                              ),
-                            );
-                    }),
+                                child: Text(
+                                  "Add",
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.black),
+                                ),
+                              );
+                      }),
+                    ),
                   ],
                 ),
               ),
