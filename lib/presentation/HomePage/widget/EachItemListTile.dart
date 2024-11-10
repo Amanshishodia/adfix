@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/DetailPage/model/ServiceResponseModel.dart';
 import 'package:adfix/presentation/HomePage/widget/serviceFeatures.dart';
 import 'package:flutter/material.dart';
@@ -40,32 +41,20 @@ class _EachItemListTileState extends State<EachItemListTile> {
                   children: [
                     Text(
                       widget.service.serviceName,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: bodyBigbold.copyWith(fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 4),
                     Text(
-                        '⭐ ${widget.service.rating} (${widget.service.reviews})'),
+                      '⭐ ${widget.service.rating} (${widget.service.reviews})',
+                      style: bodysmall400,
+                    ),
                     SizedBox(height: 4),
                     RichText(
                       text: TextSpan(
                         text: '₹ ${widget.service.serviceCharge} ',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                        style: headingH5,
                         children: [
-                          TextSpan(
-                            text: 'Time: 35 mins',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.grey[600],
-                            ),
-                          ),
+                          TextSpan(text: 'Time: 35 mins', style: bodysmallbold),
                         ],
                       ),
                     ),
@@ -80,6 +69,7 @@ class _EachItemListTileState extends State<EachItemListTile> {
               Expanded(
                 flex: 1,
                 child: Stack(
+                  clipBehavior: Clip.none,
                   alignment: Alignment.bottomCenter,
                   children: [
                     ClipRRect(
@@ -91,40 +81,43 @@ class _EachItemListTileState extends State<EachItemListTile> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Obx(() {
-                      final cartItem = cartController.cartItems.firstWhere(
-                        (item) => item.id == (widget.service.id ?? ''),
-                        orElse: () => CartItem(
-                          id: widget.service.id ?? DateTime.now().toString(),
-                          name: widget.service.serviceName,
-                          price: double.parse(
-                              widget.service.serviceCharge.toString()),
-                          imageUrl: widget.service.image.url,
-                          quantity: 0,
-                        ),
-                      );
+                    Positioned(
+                      bottom: -15, // Position it partially outside the image
+                      child: Obx(() {
+                        final cartItem = cartController.cartItems.firstWhere(
+                          (item) => item.id == (widget.service.id ?? ''),
+                          orElse: () => CartItem(
+                            id: widget.service.id ?? DateTime.now().toString(),
+                            name: widget.service.serviceName,
+                            price: double.parse(
+                                widget.service.serviceCharge.toString()),
+                            imageUrl: widget.service.image.url,
+                            quantity: 0,
+                          ),
+                        );
 
-                      return cartItem.quantity > 0
-                          ? _buildQuantityController(cartItem)
-                          : ElevatedButton(
-                              onPressed: () {
-                                _openDrawer(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shadowColor: Colors.black12,
-                                padding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                        return cartItem.quantity > 0
+                            ? _buildQuantityController(cartItem)
+                            : ElevatedButton(
+                                onPressed: () {
+                                  _openDrawer(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.black12,
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(color: Colors.grey[400]!),
+                                  ),
+                                  backgroundColor: Colors.white,
                                 ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                "Add",
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.black),
-                              ),
-                            );
-                    }),
+                                child: Text(
+                                  "Add",
+                                  style: bodyBigbold,
+                                ),
+                              );
+                      }),
+                    ),
                   ],
                 ),
               ),
@@ -233,13 +226,7 @@ class _EachItemListTileState extends State<EachItemListTile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              service.serviceName,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Text(service.serviceName, style: headingH5),
                             ElevatedButton(
                               onPressed: () {
                                 _closeDrawerAndShowQuantityController();
@@ -261,8 +248,9 @@ class _EachItemListTileState extends State<EachItemListTile> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 4),
-                        Text('⭐ ${service.rating} (${service.reviews})'),
+                        SizedBox(height: 2),
+                        Text('⭐ ${service.rating} (${service.reviews})',
+                            style: bodyBig),
                         SizedBox(height: 4),
                         RichText(
                           text: TextSpan(
@@ -294,7 +282,8 @@ class _EachItemListTileState extends State<EachItemListTile> {
                         ),
                         SizedBox(height: 9),
                         ServiceFeatures(
-                            text: 'Advanced Foam-jet cleaning of indoor unit'),
+                          text: 'Advanced Foam-jet cleaning of indoor unit',
+                        ),
                         SizedBox(height: 9),
                         ServiceFeatures(
                             text: 'Advanced Foam-jet cleaning of indoor unit'),

@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class ManageAddressesPage extends StatelessWidget {
         ),
         title: Text(
           'Manage Addresses',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: headingH4,
         ),
         centerTitle: false,
       ),
@@ -61,14 +62,7 @@ class ManageAddressesPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Home',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
+                      Text('Home', style: headingH5),
                       PopupMenuButton<String>(
                         icon: Icon(Icons.more_vert, color: Colors.black),
                         color: Colors.white,
@@ -83,32 +77,28 @@ class ManageAddressesPage extends StatelessWidget {
                         itemBuilder: (BuildContext context) => [
                           PopupMenuItem<String>(
                             value: 'Edit',
-                            child: Text('Edit'),
+                            child: Text(
+                              'Edit',
+                              style: bodyBig,
+                            ),
                           ),
                           PopupMenuItem<String>(
                             value: 'Delete',
-                            child: Text('Delete'),
+                            child: Text(
+                              'Delete',
+                              style: bodyBig,
+                            ),
                           ),
                         ],
                       )
                     ],
                   ),
-                  SizedBox(height: 8.0),
+                  SizedBox(height: 0.0),
                   Text(
-                    'Block A, Industrial Area, Sector 62, Noida,\nUttar Pradesh 201309, India',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.black54,
-                    ),
-                  ),
+                      'Block A, Industrial Area, Sector 62, Noida,\nUttar Pradesh 201309, India',
+                      style: bodysmall400),
                   SizedBox(height: 8.0),
-                  Text(
-                    'Somya, +91 8081942194',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.black54,
-                    ),
-                  ),
+                  Text('Somya, +91 8081942194', style: bodysmall400),
                 ],
               ),
             ),

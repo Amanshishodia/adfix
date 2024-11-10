@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,22 +21,11 @@ class ChangeEmailAddressPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "I want to change my email address",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+            Text("I want to change my email address", style: headingH4),
             SizedBox(height: 8),
             Text(
-              "You can change your email address from the profilesection after verifying with an OTP",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
+                "You can change your email address from the profilesection after verifying with an OTP",
+                style: bodyBig),
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -45,28 +35,17 @@ class ChangeEmailAddressPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () { Get.to(EditProfilePage());},
-              child: Text(
-                "Change email address",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              onPressed: () {
+                Get.to(EditProfilePage());
+              },
+              child: Text("Change email address", style: bodyBigWhite),
             ),
             SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                Text(
-                  "Was this article helpful?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
+                Text("Was this article helpful?", style: bodyBig),
                 Spacer(),
                 IconButton(
                   icon:

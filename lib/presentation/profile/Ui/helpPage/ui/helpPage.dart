@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/profile/Ui/aboutUsPage/Ui/aboutUs.dart';
 import 'package:adfix/presentation/profile/Ui/helpPage/ui/account.dart';
 import 'package:adfix/presentation/profile/Ui/helpPage/ui/safetyMeasures.dart';
@@ -18,11 +19,7 @@ class HelpPage extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          title: Text(
-            'How can we help you?',
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+          title: Text('How can we help you?', style: headingH5),
         ),
         body: Container(
           color: Colors.white,
@@ -33,14 +30,17 @@ class HelpPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                 child: Text(
                   'All topics',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: headingH5,
                 ),
               ),
               Expanded(
                 child: ListView(
                   children: [
                     ListTile(
-                      title: Text('Account'),
+                      title: Text(
+                        'Account',
+                        style: bodyBig,
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         Get.to(AccountPage());
@@ -48,7 +48,10 @@ class HelpPage extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      title: Text('Getting started with Adfix'),
+                      title: Text(
+                        'Getting started with Adfix',
+                        style: bodyBig,
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         Get.to(AboutPage());
@@ -56,28 +59,40 @@ class HelpPage extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      title: Text('Payment & Adfix Credits'),
+                      title: Text(
+                        'Payment & Adfix Credits',
+                        style: bodyBig,
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         // Navigate to Payment page
                       },
                     ),
                     ListTile(
-                      title: Text('AD Plus Membership'),
+                      title: Text(
+                        'AD Plus Membership',
+                        style: bodyBig,
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         // Navigate to Membership page
                       },
                     ),
                     ListTile(
-                      title: Text('Adfix Safety'),
+                      title: Text(
+                        'Adfix Safety',
+                        style: bodyBig,
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         Get.to(SafetyMeasures());
                       },
                     ),
                     ListTile(
-                      title: Text('Warranty'),
+                      title: Text(
+                        'Warranty',
+                        style: bodyBig,
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 14),
                       onTap: () {
                         // Navigate to Warranty page

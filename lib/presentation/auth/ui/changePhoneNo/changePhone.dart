@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,22 +21,11 @@ class ChangePhoneNumberPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "I want to change my phone number",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+            Text("I want to change my phone number", style: headingH4),
             SizedBox(height: 8),
             Text(
-              "You can change your phone number from the profile section after verifying it with an OTP",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
+                "You can change your phone number from the profile section after verifying it with an OTP",
+                style: bodyBig),
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -48,27 +38,14 @@ class ChangePhoneNumberPage extends StatelessWidget {
               onPressed: () {
                 Get.to(EditProfilePage());
               },
-              child: Text(
-                "Change phone number",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: Text("Change phone number", style: headingH4white),
             ),
             SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                Text(
-                  "Was this article helpful?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
+                Text("Was this article helpful?", style: bodyBig),
                 Spacer(),
                 IconButton(
                   icon:
