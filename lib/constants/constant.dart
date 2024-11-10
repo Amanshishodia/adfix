@@ -17,8 +17,7 @@ Color additionalPinkLight = HexColor("#816BEB");
 Color additionalBlueLight = HexColor("#0A58CA");
 Color textColor = HexColor("#8A90A2");
 Color dividerColor = HexColor("#E7E7E7");
-Color dividerColorlight = HexColor("#FCFCFC"
-);
+Color dividerColorlight = HexColor("#FCFCFC");
 
 Color darkPurple = HexColor("#2A0039");
 
@@ -34,17 +33,27 @@ TextStyle headingH3 = GoogleFonts.inter(
     color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 TextStyle headingH4 = GoogleFonts.inter(
     color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold);
-    TextStyle headingH5 = GoogleFonts.inter(
+TextStyle headingH4white = GoogleFonts.inter(
+    color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold);
+TextStyle headingH5 = GoogleFonts.inter(
     color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold);
+TextStyle headingfade = GoogleFonts.inter(
+  fontSize: 18.0,
+  fontWeight: FontWeight.w600,
+  color: Colors.grey[700],
+);
+
 TextStyle bodyBig = GoogleFonts.inter(
     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w400);
-    TextStyle bodyBigbold = GoogleFonts.inter(
+TextStyle bodyBigbold = GoogleFonts.inter(
     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500);
+    TextStyle bodyBigWhite = GoogleFonts.inter(
+    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500);
 TextStyle bodysmall = GoogleFonts.inter(
     color: Colors.black, fontSize: 10, fontWeight: FontWeight.w300);
-    TextStyle bodysmallbold = GoogleFonts.inter(
+TextStyle bodysmallbold = GoogleFonts.inter(
     color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500);
-    TextStyle bodysmall400 = GoogleFonts.inter(
+TextStyle bodysmall400 = GoogleFonts.inter(
     color: Colors.black, fontSize: 12, fontWeight: FontWeight.w400);
-    TextStyle bodysmallBold = GoogleFonts.inter(
+TextStyle bodysmallBold = GoogleFonts.inter(
     color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold);

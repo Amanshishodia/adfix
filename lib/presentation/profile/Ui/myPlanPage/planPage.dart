@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class MyPlanPage extends StatelessWidget {
@@ -15,27 +16,23 @@ class MyPlanPage extends StatelessWidget {
         ),
         title: Text(
           'My plan',
-          style: TextStyle(color: Colors.black),
+          style: headingH4,
         ),
         actions: [
           TextButton(
             onPressed: () {
               // Add functionality for Help button
             },
-            child: Text(
-              'Help',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            child: Text('Help', style: bodyBig),
             style: TextButton.styleFrom(
-              side: BorderSide(color: Colors.grey), // Grey border around the button
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.0), // Rounded corners with radius 8.0
-              ),
-              padding: EdgeInsets.all(10) // Padding from right
-            ),
+                side: BorderSide(
+                    color: Colors.grey), // Grey border around the button
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      6.0), // Rounded corners with radius 8.0
+                ),
+                padding: EdgeInsets.all(10) // Padding from right
+                ),
           ),
         ],
       ),
@@ -49,22 +46,9 @@ class MyPlanPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Active Plans',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
+                Text('Active Plans', style: headingH5),
+                Text('You have no active plans', style: bodyBig),
                 SizedBox(height: 4.0),
-                Text(
-                  'You have no active plans',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black54,
-                  ),
-                ),
               ],
             ),
           ),

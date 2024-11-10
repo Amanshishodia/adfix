@@ -1,9 +1,23 @@
 import 'package:adfix/presentation/Payment/ui/wallet.dart';
 import 'package:adfix/presentation/auth/controller/AuthController.dart';
+import 'package:adfix/presentation/auth/ui/changeEmailAddress/ui/changeEmailAddress.dart';
+import 'package:adfix/presentation/auth/ui/changePhoneNo/changePhone.dart';
+import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
 import 'package:adfix/presentation/auth/ui/splashScreen/splashScreen.dart';
+import 'package:adfix/presentation/changeAddress/Ui/changeAddressPage.dart';
+import 'package:adfix/presentation/changeAddress/Ui/manageAddress.dart';
 // import 'package:adfix/presentation/changeAddress/Ui/setAddressPage.dart';
 import 'package:adfix/presentation/changeAddress/controller/AddressController.dart';
+import 'package:adfix/presentation/profile/Ui/ProfileEditPage/ProfileEditPage.dart';
+import 'package:adfix/presentation/profile/Ui/aboutUsPage/Ui/aboutAdfix.dart';
+import 'package:adfix/presentation/profile/Ui/aboutUsPage/Ui/aboutUs.dart';
+import 'package:adfix/presentation/profile/Ui/helpPage/ui/account.dart';
+import 'package:adfix/presentation/profile/Ui/helpPage/ui/helpPage.dart';
+import 'package:adfix/presentation/profile/Ui/helpPage/ui/safetyMeasures.dart';
+import 'package:adfix/presentation/profile/Ui/myPlanPage/planPage.dart';
+import 'package:adfix/presentation/profile/Ui/profile.dart';
+import 'package:adfix/presentation/profile/Ui/ratingPage/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -114,7 +128,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SplashScreen());
+        home: SafetyMeasures());
   }
 }
 //Obx(() => authController.isLoggedIn.value ? Myhome() : SignIn())

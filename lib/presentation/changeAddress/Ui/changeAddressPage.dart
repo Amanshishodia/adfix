@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/auth/ui/changePhoneNo/detailPage.dart';
 import 'package:adfix/presentation/changeAddress/Ui/manageAddress.dart';
 import 'package:flutter/material.dart';
@@ -21,48 +22,22 @@ class ChangeAddressPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8),
-            Text(
-              "You can check your saved addresses using the following ways:",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            Text(
-              "Where can I check my saved addresses?",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              " 1. While selecting the location on the app homescreen",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              " 2. Check address on the checkout screen before making payment",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              "Check address on the checkout screen before making payment",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            
             SizedBox(height: 20),
+            Text("Where can I check my saved addresses?", style: headingH4),
+            SizedBox(height: 20),
+            Text("You can check your saved addresses using the following ways:",
+                style: bodyBig),
+            SizedBox(height: 20),
+            Text(" 1. While selecting the location on the app homescreen",
+                style: bodyBig),
+            SizedBox(height: 10),
+            Text(
+                " 2. Check address on the checkout screen before making payment",
+                style: bodyBig),
+            SizedBox(height: 20),
+            Text("Check address on the checkout screen before making payment",
+                style: bodyBig),
+            SizedBox(height: 25),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[700],
@@ -74,27 +49,14 @@ class ChangeAddressPage extends StatelessWidget {
               onPressed: () {
                 Get.to(ManageAddressesPage());
               },
-              child: Text(
-                "My addresses",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: Text("My addresses", style: headingH4white),
             ),
             SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                Text(
-                  "Was this article helpful?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
+                Text("Was this article helpful?", style: bodyBig),
                 Spacer(),
                 IconButton(
                   icon:

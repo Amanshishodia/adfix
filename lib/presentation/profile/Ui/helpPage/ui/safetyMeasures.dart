@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class SafetyMeasures extends StatelessWidget {
@@ -18,50 +19,23 @@ class SafetyMeasures extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text("Know more about Urban Company's safety measures",
+                style: headingH4),
+            SizedBox(height: 15),
             Text(
-              "Know more about Urban Company's safety measures",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 8),
+                "At Adfix Company, the safety of teh customer and professinals is taken extremely seriously. To ensure this, we have taken the following precautionary measures:",
+                style: bodyBig),
+            SizedBox(height: 15),
+            Text("We conduct background verification on all our professionals ",
+                style: bodyBig),
+            SizedBox(height: 10),
             Text(
-              "At Adfix Company, the safety of teh customer and professinals is taken extremely seriously. To ensure this, we have taken the following precautionary measures:",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              "We conduct background verification on all our professionals ",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-
-            SizedBox(height: 8),
-            Text(
-              "In case of any critical support, SOS button is availble in app for both our customers and professionals",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
+                "In case of any critical support, SOS button is availble in app for both our customers and professionals",
+                style: bodyBig),
             SizedBox(height: 20),
-            
             Row(
               children: [
-                Text(
-                  "Was this article helpful?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
+                Text("Was this article helpful?", style: bodyBig),
                 Spacer(),
                 IconButton(
                   icon:

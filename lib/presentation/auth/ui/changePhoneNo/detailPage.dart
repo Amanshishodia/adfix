@@ -1,23 +1,19 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, 
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            
-          },
+          onPressed: () {},
         ),
-        title: const Text(
-          "Edit profile",
-          style: TextStyle(color: Colors.black),
-        ),
+        title: Text("Edit profile", style: headingH3),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,7 +42,7 @@ class EditProfilePage extends StatelessWidget {
                   labelText: "Phone Number",
                   labelStyle: TextStyle(
                     fontSize: 14,
-                    color: Colors.black, 
+                    color: Colors.black,
                   ),
                   alignLabelWithHint: true,
                   contentPadding:
@@ -57,7 +53,7 @@ class EditProfilePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          'assets/images/flag.jpg', 
+                          'assets/images/flag.jpg',
                           width: 24,
                           height: 24,
                         ),
@@ -66,15 +62,14 @@ class EditProfilePage extends StatelessWidget {
                           "+91",
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black, 
+                            color: Colors.black,
                           ),
                         ),
                       ],
                     ),
                   ),
                   border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Colors.grey), 
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                 ),
                 keyboardType: TextInputType.phone,
@@ -105,9 +100,9 @@ class EditProfilePage extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
+              Text(
                 "All communications and invoices will be sent to your updated contact details",
-                style: TextStyle(fontSize: 16),
+                style: bodyBig,
                 textAlign: TextAlign.left,
               ),
               const SizedBox(height: 24),
@@ -118,13 +113,9 @@ class EditProfilePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
+                    child:  Text(
                       "CANCEL",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: headingH5
                     ),
                   ),
                   CustomButton(

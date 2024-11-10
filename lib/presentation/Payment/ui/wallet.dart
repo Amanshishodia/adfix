@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class MyWalletPage extends StatefulWidget {
@@ -16,7 +17,10 @@ class _MyWalletPageState extends State<MyWalletPage> {
             // Add back button functionality here
           },
         ),
-        title: Text("My Wallet"),
+        title: Text(
+          "My Wallet",
+          style: headingH4,
+        ),
         elevation: 0,
       ),
       body: Column(
@@ -39,21 +43,15 @@ class _MyWalletPageState extends State<MyWalletPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Refer your',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
+                        Text('Refer your', style: headingH4white),
                         SizedBox(height: 5),
-                        Text(
-                          'friends and earn',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
+                        Text('friends and earn', style: headingH4white),
                       ],
                     ),
-                    SizedBox(width: 50),
+                    SizedBox(width: 10),
                     Image.asset(
-                      '/images/friend.png',
-                      scale: 4,
+                      'assets/images/friend.png',
+                      scale: 3,
                     )
                   ],
                 ),
@@ -94,24 +92,14 @@ class _MyWalletPageState extends State<MyWalletPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text("Ad Cash", style: headingH5),
                               Text(
-                                "Ad Cash",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "Formerly Ad Credits. Applicable on all services",
-                                style:
-                                    TextStyle(fontSize: 12, color: Colors.grey),
-                              ),
+                                  "Formerly Ad Credits. Applicable on all services",
+                                  style: bodysmall),
                             ],
                           ),
                         ),
-                        Text(
-                          "₹ 0",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
+                        Text("₹ 0", style: headingH5),
                       ],
                     ),
                     SizedBox(height: 16),
@@ -126,10 +114,7 @@ class _MyWalletPageState extends State<MyWalletPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Have a question?",
-                  style: TextStyle(fontSize: 14),
-                ),
+                Text("Have a question?", style: bodyBigbold),
                 Icon(Icons.arrow_forward_ios, size: 16),
               ],
             ),
@@ -139,10 +124,7 @@ class _MyWalletPageState extends State<MyWalletPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Wallet activity",
-                  style: TextStyle(fontSize: 14),
-                ),
+                Text("Wallet activity", style: bodyBigbold),
                 // Icon(Icons.arrow_forward_ios, size: 16),
               ],
             ),
