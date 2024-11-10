@@ -751,8 +751,8 @@ class ServiceSummaryPage extends StatelessWidget {
                     : 'Add address and slots',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             );
