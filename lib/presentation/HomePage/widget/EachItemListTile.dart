@@ -166,33 +166,35 @@ class _EachItemListTileState extends State<EachItemListTile> {
           ),
         ],
       ),
-      width: 106,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(Icons.remove, size: 12),
-            onPressed: () {
-              cartController.decrementQuantity(cartItem.id);
-              if (cartItem.quantity.value <= 0) {
-                cartController.removeItem(cartItem.id); // Remove from cart
-              }
-            },
-          ),
-          Text(
-            '${cartItem.quantity}',
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-          ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(Icons.add, size: 12),
-            onPressed: () {
-              cartController.incrementQuantity(cartItem.id);
-            },
-          ),
-        ],
+      height: 32,
+      width: 54,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                cartController.decrementQuantity(cartItem.id);
+                if (cartItem.quantity.value <= 0) {
+                  cartController.removeItem(cartItem.id); // Remove from cart
+                }
+              },
+              child: Icon(Icons.remove, size: 12),
+            ),
+            Text(
+              '${cartItem.quantity}',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+            GestureDetector(
+              onTap: () {
+                cartController.incrementQuantity(cartItem.id);
+              },
+              child: Icon(Icons.add, size: 12),
+            ),
+          ],
+        ),
       ),
     );
   }

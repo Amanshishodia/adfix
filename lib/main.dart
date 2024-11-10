@@ -1,4 +1,6 @@
+import 'package:adfix/presentation/Payment/ui/wallet.dart';
 import 'package:adfix/presentation/auth/controller/AuthController.dart';
+import 'package:adfix/presentation/auth/ui/sign_in/sign_in.dart';
 import 'package:adfix/presentation/auth/ui/splashScreen/splashScreen.dart';
 // import 'package:adfix/presentation/changeAddress/Ui/setAddressPage.dart';
 import 'package:adfix/presentation/changeAddress/controller/AddressController.dart';

@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/changeAddress/Ui/changeAddress.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class ServiceSummaryPage extends StatelessWidget {
         children: [
           Text(
             'Add a tip to thank the Professional',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+            style: headingH5,
           ),
           SizedBox(height: 16),
           Row(
@@ -114,7 +115,7 @@ class ServiceSummaryPage extends StatelessWidget {
           SizedBox(height: 12),
           Text(
             '100% of the tip goes to the professional',
-            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            style: bodysmallbold,
           ),
         ],
       ),
@@ -214,26 +215,27 @@ class ServiceSummaryPage extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: Image.network(
-                    item.imageUrl,
-                    width: 48,
-                    height: 48,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 48,
-                      height: 48,
-                      color: Colors.grey[200],
-                      child: Icon(Icons.error_outline, color: Colors.grey),
-                    ),
-                  ),
-                ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(4),
+                //   child: Image.network(
+                //     item.imageUrl,
+                //     width: 48,
+                //     height: 48,
+                //     fit: BoxFit.cover,
+                //     errorBuilder: (context, error, stackTrace) => Container(
+                //       width: 48,
+                //       height: 48,
+                //       color: Colors.grey[200],
+                //       child: Icon(Icons.error_outline, color: Colors.grey),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     item.name,
-                    style: TextStyle(fontSize: 15),
+                    style: bodyBig,
+                    // style: TextStyle(fontSize: 15),
                   ),
                 ),
               ],
@@ -245,35 +247,57 @@ class ServiceSummaryPage extends StatelessWidget {
                 height: 32,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.deepPurple),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.remove,
-                          size: 18, color: Colors.deepPurple),
-                      onPressed: () =>
-                          cartController.decrementQuantity(item.id),
-                    ),
-                    Obx(() => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          child: Text('${item.quantity.value}',
-                              style: TextStyle(fontSize: 14)),
-                        )),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.add, size: 18, color: Colors.deepPurple),
-                      onPressed: () =>
-                          cartController.incrementQuantity(item.id),
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          cartController.decrementQuantity(item.id);
+                        },
+                        child: Icon(Icons.remove,
+                            size: 18, color: Colors.deepPurple),
+                      ),
+                      Obx(() => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text('${item.quantity.value}',
+                                style: TextStyle(fontSize: 14)),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          cartController.incrementQuantity(item.id);
+                        },
+                        child:
+                            Icon(Icons.add, size: 18, color: Colors.deepPurple),
+                      ),
+                      // IconButton(
+                      //   padding: EdgeInsets.zero,
+                      //   icon: Icon(Icons.remove,
+                      //       size: 18, color: Colors.deepPurple),
+                      //   onPressed: () =>
+                      //       cartController.decrementQuantity(item.id),
+                      // ),
+                      // Obx(() => Padding(
+                      //       padding: EdgeInsets.symmetric(horizontal: 12),
+                      //       child: Text('${item.quantity.value}',
+                      //           style: TextStyle(fontSize: 14)),
+                      //     )),
+                      // IconButton(
+                      //   padding: EdgeInsets.zero,
+                      //   icon: Icon(Icons.add, size: 18, color: Colors.deepPurple),
+                      //   onPressed: () =>
+                      //       cartController.incrementQuantity(item.id),
+                      // ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(width: 12),
               Obx(() => Text(
                     '₹${(item.price * item.quantity.value).toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 15),
+                    style: bodyBigbold,
                   )),
             ],
           ),
@@ -286,11 +310,10 @@ class ServiceSummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateTimeController = Get.put(DateTimeController());
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: BackButton(color: Colors.black),
-        title: Text('Summary',
-            style: TextStyle(color: Colors.black, fontSize: 16)),
+        title: Text('Summary', style: bodyBig),
         backgroundColor: Colors.white,
         elevation: 1,
       ),
@@ -304,7 +327,9 @@ class ServiceSummaryPage extends StatelessWidget {
             children: [
               // Savings Banner
               Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: dividerColor)),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   children: [
@@ -321,7 +346,7 @@ class ServiceSummaryPage extends StatelessWidget {
                       "on this order!",
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(width: 4),
+                    SizedBox(width: 70),
                     Icon(Icons.monetization_on,
                         color: Colors.amber[700], size: 20),
                   ],
@@ -334,6 +359,21 @@ class ServiceSummaryPage extends StatelessWidget {
               ...cartController.cartItems.map(_buildCartItem).toList(),
               // Adfix cover
               Container(
+                margin: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: List.generate(
+                      150 ~/ 1,
+                      (index) => Expanded(
+                            child: Container(
+                              color: index % 2 == 0
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              height: 1,
+                            ),
+                          )),
+                ),
+              ),
+              Container(
                 color: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
@@ -341,16 +381,15 @@ class ServiceSummaryPage extends StatelessWidget {
                   children: [
                     Text(
                       'Adfix cover',
-                      style: TextStyle(fontSize: 15),
+                      style: bodyBigbold,
                     ),
                     Row(
                       children: [
                         Text(
                           'protection on this booking',
-                          style:
-                              TextStyle(fontSize: 13, color: Colors.grey[600]),
+                          style: bodyBig,
                         ),
-                        SizedBox(width: 8),
+                        SizedBox(width: 28),
                         Text(
                           'Add',
                           style: TextStyle(
@@ -381,13 +420,18 @@ class ServiceSummaryPage extends StatelessWidget {
                           children: [
                             Text(
                               'Membership',
-                              style: TextStyle(fontSize: 15),
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            SizedBox(height: 4),
+                            // SizedBox(height: 4),
                             Text(
                               '6 months plan',
                               style: TextStyle(
-                                  fontSize: 13, color: Colors.grey[600]),
+                                  fontSize: 14,
+                                  color: darkPurple,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -401,16 +445,16 @@ class ServiceSummaryPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
                     Text(
                       'Save ₹100 on this booking',
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      style: bodysmall,
                     ),
+                    SizedBox(height: 12),
                     Text(
                       'Save 10% on every service',
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      style: bodysmall,
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 2),
                     Text(
                       'View all benefits',
                       style: TextStyle(
@@ -427,7 +471,11 @@ class ServiceSummaryPage extends StatelessWidget {
 
               // Contact Info
               Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  border: Border.all(color: dividerColor),
+                ),
+                // color: Colors.grey[100],
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   children: [
@@ -436,13 +484,13 @@ class ServiceSummaryPage extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       'Satyam, +91 8081924394',
-                      style: TextStyle(fontSize: 14),
+                      style: bodyBig,
                     ),
                     Spacer(),
                     Text(
                       'Change',
                       style: TextStyle(
-                        color: Colors.green,
+                        color: primaryColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -451,7 +499,7 @@ class ServiceSummaryPage extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 8),
+              SizedBox(height: 6),
 
               // Service Preferences
               Container(
@@ -460,23 +508,20 @@ class ServiceSummaryPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Service Preferences',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                    ),
+                    Text('Service Preferences', style: headingH5),
                     SizedBox(height: 12),
-                    Text(
-                      'Avoid calling before reaching the location',
-                      style: TextStyle(fontSize: 14, color: Colors.grey[800]),
-                    ),
+                    Text('      Avoid calling before reaching the location',
+                        style: bodysmallbold),
                   ],
                 ),
               ),
 
               // Coupons and offers
               Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  border: Border.all(color: dividerColor),
+                ),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 margin: EdgeInsets.only(top: 1),
                 child: Row(
@@ -489,7 +534,7 @@ class ServiceSummaryPage extends StatelessWidget {
                         SizedBox(width: 12),
                         Text(
                           'Coupons and offers',
-                          style: TextStyle(fontSize: 14),
+                          style: bodysmall400,
                         ),
                       ],
                     ),
@@ -523,16 +568,14 @@ class ServiceSummaryPage extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Payment summary',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500)),
+                      Text('Payment summary', style: headingH5),
                       SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Item total', style: TextStyle(fontSize: 14)),
+                          Text('Item total', style: bodyBig),
                           Text('₹${itemTotal.toStringAsFixed(2)}',
-                              style: TextStyle(fontSize: 14)),
+                              style: bodyBigbold),
                         ],
                       ),
                       if (tip > 0) ...[
@@ -540,9 +583,9 @@ class ServiceSummaryPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Tip amount', style: TextStyle(fontSize: 14)),
+                            Text('Tip amount', style: bodyBig),
                             Text('₹${tip.toStringAsFixed(2)}',
-                                style: TextStyle(fontSize: 14)),
+                                style: bodyBigbold),
                           ],
                         ),
                       ],
@@ -550,7 +593,7 @@ class ServiceSummaryPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Item discount', style: TextStyle(fontSize: 14)),
+                          Text('Item discount', style: bodyBig),
                           Text('-₹${discount.toStringAsFixed(2)}',
                               style:
                                   TextStyle(fontSize: 14, color: Colors.green)),
@@ -562,7 +605,7 @@ class ServiceSummaryPage extends StatelessWidget {
                         children: [
                           Text('Taxes and fee', style: TextStyle(fontSize: 14)),
                           Text('₹${taxes.toStringAsFixed(2)}',
-                              style: TextStyle(fontSize: 14)),
+                              style: bodyBigbold),
                         ],
                       ),
                       SizedBox(height: 12),
@@ -584,12 +627,9 @@ class ServiceSummaryPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Total',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500)),
+                          Text('Total', style: headingH4),
                           Text('₹${finalTotal.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500)),
+                              style: headingH5),
                         ],
                       ),
                     ],
@@ -607,17 +647,16 @@ class ServiceSummaryPage extends StatelessWidget {
                   children: [
                     Text(
                       'Cancellation & reschedule policy',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style: headingH5,
                     ),
                     SizedBox(height: 8),
                     Text(
                       'Free cancellation/reschedule 2 days before service time.',
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      style: bodysmall400,
                     ),
                     Text(
                       'You will be charged from the payment after that otherwise',
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      style: bodysmall400,
                     ),
                     SizedBox(height: 8),
                     Text(
@@ -629,6 +668,21 @@ class ServiceSummaryPage extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: List.generate(
+                      150 ~/ 1,
+                      (index) => Expanded(
+                            child: Container(
+                              color: index % 2 == 0
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              height: 1,
+                            ),
+                          )),
                 ),
               ),
               _buildAddressSection(),
@@ -697,8 +751,8 @@ class ServiceSummaryPage extends StatelessWidget {
                     : 'Add address and slots',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             );
@@ -787,10 +841,7 @@ Widget _buildDateTimeSection() {
                     children: [
                       Text(
                         'Schedule',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: headingH5,
                       ),
                       SizedBox(height: 4),
                       Text(
