@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:adfix/presentation/profile/Ui/ProfileEditPage/ProfileEditPage.dart';
 import 'package:adfix/presentation/profile/Ui/myBookingPage/myBookingPage.dart';
 import 'package:adfix/presentation/profile/widget/Logout_Button.dart';
@@ -36,7 +37,7 @@ class Profile extends StatelessWidget {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Satyam',
                             style: TextStyle(
@@ -44,8 +45,7 @@ class Profile extends StatelessWidget {
                           ),
                           Text(
                             '+91 808192914',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w300, fontSize: 15),
+                            style: bodysmallBold,
                           ),
                         ],
                       ),

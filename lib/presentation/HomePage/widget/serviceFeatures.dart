@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class ServiceFeatures extends StatelessWidget {
@@ -17,10 +18,7 @@ class ServiceFeatures extends StatelessWidget {
           scale: 1,
         ),
         const SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(fontSize: 14),
-        ),
+        Text(text, style: bodysmall400),
       ],
     );
   }

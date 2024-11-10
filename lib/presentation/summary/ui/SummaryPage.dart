@@ -346,7 +346,7 @@ class ServiceSummaryPage extends StatelessWidget {
                       "on this order!",
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(width: 70),
+                    SizedBox(width: 50),
                     Icon(Icons.monetization_on,
                         color: Colors.amber[700], size: 20),
                   ],

@@ -1,3 +1,4 @@
+import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
@@ -41,7 +42,7 @@ class CardWidget extends StatelessWidget {
               ),
               Text(
                 text,
-                style: TextStyle(fontSize: 10),
+                style: bodysmall400,
               )
             ],
           ),
