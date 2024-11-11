@@ -35,14 +35,7 @@ jobs:
       - name: Build Android APK
         run: flutter build apk --release --split-per-abi
 
-      # Build iOS IPA
-      - name: Build iOS IPA
-        run: |
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cp -r Runner.app Payload/
-          zip -r app.ipa Payload
+      #
 
       # Upload artifacts to GitHub releases
       - name: Push to Releases
