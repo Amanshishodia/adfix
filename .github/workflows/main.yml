@@ -1,47 +1,53 @@
+name: "Build & Release"
+
 on:
+  push:
+    branches:
+      - main
+      - ac_service
+      - develop
   pull_request:
     branches:
       - main
       - ac_service
-  push:
-    branches:
-      - main
-name: "Build & Release"
+      - develop
+
 jobs:
   build:
     name: Build & Release
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
+      # Set up Java environment (use Java 17)
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '12'
+          java-version: '17' # Ensures Java 17 for Android Gradle compatibility
+
+      # Set up Flutter environment
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
 
-      - run: flutter build apk --release --split-per-abi
-      - run: |
+      # Build APK
+      - name: Build Android APK
+        run: flutter build apk --release --split-per-abi
+
+      # Build iOS IPA
+      - name: Build iOS IPA
+        run: |
           flutter build ios --no-codesign
           cd build/ios/iphoneos
           mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
+          cp -r Runner.app Payload/
           zip -r app.ipa Payload
+
+      # Upload artifacts to GitHub releases
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/release/*,build/ios/iphoneos/app.ipa"
+          artifacts: "build/app/outputs/apk/release/*.apk,build/ios/iphoneos/app.ipa"
           tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
-
-
-
-
-
-
-# push to master, main, develop
-# pull request on main master
+          token: ${{ secrets.GITHUB_TOKEN }}
