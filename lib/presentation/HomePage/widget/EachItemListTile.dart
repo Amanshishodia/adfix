@@ -41,7 +41,7 @@ class _EachItemListTileState extends State<EachItemListTile> {
                   children: [
                     Text(
                       widget.service.serviceName,
-                      style: bodyBigbold.copyWith(fontWeight: FontWeight.w600),
+                      style: bodyBigbold.copyWith(fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 4),
                     Text(
@@ -226,7 +226,9 @@ class _EachItemListTileState extends State<EachItemListTile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(service.serviceName, style: headingH5),
+                            Expanded(
+                                child: Text(service.serviceName,
+                                    style: headingH5)),
                             ElevatedButton(
                               onPressed: () {
                                 _closeDrawerAndShowQuantityController();

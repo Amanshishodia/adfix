@@ -47,7 +47,7 @@ TextStyle bodyBig = GoogleFonts.inter(
     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w400);
 TextStyle bodyBigbold = GoogleFonts.inter(
     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500);
-    TextStyle bodyBigWhite = GoogleFonts.inter(
+TextStyle bodyBigWhite = GoogleFonts.inter(
     color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500);
 TextStyle bodysmall = GoogleFonts.inter(
     color: Colors.black, fontSize: 10, fontWeight: FontWeight.w300);
