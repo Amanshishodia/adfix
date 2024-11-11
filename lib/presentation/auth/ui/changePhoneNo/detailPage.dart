@@ -1,5 +1,6 @@
 import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditProfilePage extends StatelessWidget {
   @override
@@ -11,7 +12,9 @@ class EditProfilePage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
         title: Text("Edit profile", style: headingH3),
       ),
@@ -113,10 +116,7 @@ class EditProfilePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child:  Text(
-                      "CANCEL",
-                      style: headingH5
-                    ),
+                    child: Text("CANCEL", style: headingH5),
                   ),
                   CustomButton(
                     buttonText: "CONFIRM",

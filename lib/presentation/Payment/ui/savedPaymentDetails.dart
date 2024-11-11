@@ -12,7 +12,9 @@ class SavedPaymentDetails extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: Padding(
@@ -53,7 +55,9 @@ class SavedPaymentDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () { Get.to(EditProfilePage());},
+              onPressed: () {
+                Get.to(EditProfilePage());
+              },
               child: Text(
                 "Change saved payments",
                 style: TextStyle(

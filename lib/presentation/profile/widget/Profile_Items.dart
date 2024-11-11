@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileItems extends StatelessWidget {
-  final Function ontap;
+  final VoidCallback ontap;
   final String image;
   final String text;
 
@@ -14,7 +14,7 @@ class ProfileItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ontap(),
+      onTap: ontap,
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

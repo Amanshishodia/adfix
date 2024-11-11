@@ -1,5 +1,6 @@
 import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyWalletPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _MyWalletPageState extends State<MyWalletPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
+            Get.back();
             // Add back button functionality here
           },
         ),

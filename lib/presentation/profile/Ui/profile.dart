@@ -1,6 +1,9 @@
 import 'package:adfix/constants/constant.dart';
+import 'package:adfix/presentation/Payment/ui/wallet.dart';
 import 'package:adfix/presentation/profile/Ui/ProfileEditPage/ProfileEditPage.dart';
 import 'package:adfix/presentation/profile/Ui/myBookingPage/myBookingPage.dart';
+import 'package:adfix/presentation/profile/Ui/myPlanPage/planPage.dart';
+import 'package:adfix/presentation/profile/Ui/ratingPage/rating.dart';
 import 'package:adfix/presentation/profile/widget/Logout_Button.dart';
 import 'package:adfix/presentation/profile/widget/cardWidget.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +77,9 @@ class Profile extends StatelessWidget {
                 CardWidget(
                   image: "assets/images/Wallet.png",
                   text: "Wallet",
-                  ontap: () {},
+                  ontap: () {
+                    Get.to(MyWalletPage());
+                  },
                 ),
                 CardWidget(
                   image: "assets/images/Headphones.png",
@@ -98,7 +103,9 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: [
                   ProfileItems(
-                    ontap: () {},
+                    ontap: () {
+                      Get.to(MyPlanPage());
+                    },
                     text: "My Plans",
                     image: "assets/images/Notebook.png",
                   ),
@@ -110,7 +117,9 @@ class Profile extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   ProfileItems(
-                    ontap: () {},
+                    ontap: () {
+                      Get.to(CustomerRatingPage());
+                    },
                     text: "My Rating",
                     image: "assets/images/Favorite.png",
                   ),

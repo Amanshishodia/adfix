@@ -1,5 +1,6 @@
 import 'package:adfix/constants/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomerRatingPage extends StatelessWidget {
   @override
@@ -11,7 +12,7 @@ class CustomerRatingPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.of(context).pop();
+            Get.back();
           },
         ),
       ),
